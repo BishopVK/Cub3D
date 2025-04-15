@@ -40,9 +40,20 @@ SRC				=	$(SRC_DIR)/cub3d.c \
 					$(PARSE_DIR)/detect_elements.c \
 					$(PARSE_DIR)/check_elements.c \
 					$(PARSE_DIR)/map.c \
-					$(FLOOD_FILL_DIR)/flood_fill.c
+					$(FLOOD_FILL_DIR)/flood_fill.c \
+					./src/init/game_init.c \
+					./src/init/player_init.c \
+					./src/game_engine/input/keyboard.c \
+					./src/game_engine/input/mouse.c \
+					./src/game_engine/render/frame.c \
+					./src/game_engine/render/raycasting.c \
+					./src/game_engine/render/walls.c \
+					./src/game_engine/states/game_states.c \
 
 OBJ				=	$(SRC:.c=.o)
+
+LIBMLX	= ./lib/MLX42
+LIBS	= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 
 LIBFT_DIR		=	include/libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
@@ -55,11 +66,14 @@ all: $(NAME)
 $(LIBFT):
 	@$(MAKE) -s -C $(LIBFT_DIR)
 
+libmlx:
+	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+
 $(MINILIBX):
 	@$(MAKE) -C $(MINILIBX_DIR)
 
-$(NAME): $(LIBFT) $(MINILIBX) $(OBJ)
-	@$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(MINILIBX_DIR) $(OBJ) $(LIBFT) $(MINILIBX) -L$(MINILIBX_DIR) -lX11 -lXext -lbsd -o $(NAME)
+$(NAME): libmlx $(LIBFT) $(MINILIBX) $(OBJ)
+	@$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(MINILIBX_DIR) -I$(LIBMLX)/include $(OBJ) $(LIBS) $(LIBFT) $(MINILIBX) -L$(MINILIBX_DIR) -lX11 -lXext -lbsd -o $(NAME)
 	$(call print_cyan,"Compiled cub3D")
 
 %.o: %.c
