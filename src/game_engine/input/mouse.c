@@ -6,9 +6,9 @@
 // {
 // 	int x, y;
 // 	mlx_get_mouse_pos(game->mlx, &x, &y);
-// 	if (x < screenWidth / 2)
+// 	if (x < SCREEN_WIDTH / 2)
 // 		rotate_left(game, game->frameTime * 3000);
-// 	else if (x > screenWidth / 2)
+// 	else if (x > SCREEN_WIDTH / 2)
 // 		rotate_right(game, game->frameTime * 3000);
-// 	mlx_set_mouse_pos(game->mlx, screenWidth / 2, screenHeight / 2);
+// 	mlx_set_mouse_pos(game->mlx, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 // }

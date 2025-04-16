@@ -109,7 +109,7 @@
 // 	mlx_t	*mlx;
 // 	t_game	*game;
 
-// 	if (!(mlx = mlx_init(screenWidth, screenHeight, "my_game", true)))
+// 	if (!(mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "my_game", true)))
 // 		return (EXIT_FAILURE);
 // 	game = game_factory(mlx);
 // 	if (!game)

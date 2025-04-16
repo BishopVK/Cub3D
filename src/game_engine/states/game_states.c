@@ -2,7 +2,7 @@
 
 t_bool	check_x_axis_state(t_game *game)
 {
-	if (game->x >= screenWidth)
+	if (game->x >= SCREEN_WIDTH)
 	{
 		game->state = render_frame_state;
 		return (TRUE);

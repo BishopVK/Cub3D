@@ -5,42 +5,42 @@ t_bool	calculate_ray_direction_state(t_game *game)
 	t_ray_data	*rd;
 
 	rd = game->ray_data;
-	rd->cameraX = 2 * game->x / (double)screenWidth - 1;
-	rd->rayDirX = game->player->dirX + game->player->planeX * rd->cameraX;
-	rd->rayDirY = game->player->dirY + game->player->planeY * rd->cameraX;
+	rd->camera_x = 2 * game->x / (double)SCREEN_WIDTH - 1;
+	rd->ray_dir_x = game->player->dir_x + game->player->plane_x * rd->camera_x;
+	rd->ray_dir_y = game->player->dir_y + game->player->plane_y * rd->camera_x;
 	// which box of the map we're in
-	rd->mapX = (int)game->player->posX;
-	rd->mapY = (int)game->player->posY;
+	rd->map_x = (int)game->player->pos_x;
+	rd->map_y = (int)game->player->pos_y;
 	// Calculate delta distance
-	if (rd->rayDirX == 0)
-		rd->deltaDistX = 1e30;
+	if (rd->ray_dir_x == 0)
+		rd->delta_dist_x = 1e30;
 	else
-		rd->deltaDistX = fabs(1 / rd->rayDirX);
-	if (rd->rayDirY == 0)
-		rd->deltaDistY = 1e30;
+		rd->delta_dist_x = fabs(1 / rd->ray_dir_x);
+	if (rd->ray_dir_y == 0)
+		rd->delta_dist_y = 1e30;
 	else
-		rd->deltaDistY = fabs(1 / rd->rayDirY);
+		rd->delta_dist_y = fabs(1 / rd->ray_dir_y);
 	rd->hit = 0;
 	// Calculate step and initial sideDist
-	if (rd->rayDirX < 0)
+	if (rd->ray_dir_x < 0)
 	{
-		rd->stepX = -1;
-		rd->sideDistX = (game->player->posX - rd->mapX) * rd->deltaDistX;
+		rd->step_x = -1;
+		rd->side_dist_x = (game->player->pos_x - rd->map_x) * rd->delta_dist_x;
 	}
 	else
 	{
-		rd->stepX = 1;
-		rd->sideDistX = (rd->mapX + 1.0 - game->player->posX) * rd->deltaDistX;
+		rd->step_x = 1;
+		rd->side_dist_x = (rd->map_x + 1.0 - game->player->pos_x) * rd->delta_dist_x;
 	}
-	if (rd->rayDirY < 0)
+	if (rd->ray_dir_y < 0)
 	{
-		rd->stepY = -1;
-		rd->sideDistY = (game->player->posY - rd->mapY) * rd->deltaDistY;
+		rd->step_y = -1;
+		rd->side_dist_y = (game->player->pos_y - rd->map_y) * rd->delta_dist_y;
 	}
 	else
 	{
-		rd->stepY = 1;
-		rd->sideDistY = (rd->mapY + 1.0 - game->player->posY) * rd->deltaDistY;
+		rd->step_y = 1;
+		rd->side_dist_y = (rd->map_y + 1.0 - game->player->pos_y) * rd->delta_dist_y;
 	}
 	game->state = perform_dda_state;
 	return (TRUE);
@@ -55,30 +55,30 @@ t_bool	perform_dda_state(t_game *game)
 	while (rd->hit == 0)
 	{
 		// jump to next map square, either in x-direction, or in y-direction
-		if (rd->sideDistX < rd->sideDistY)
+		if (rd->side_dist_x < rd->side_dist_y)
 		{
-			rd->sideDistX += rd->deltaDistX;
-			rd->mapX += rd->stepX;
+			rd->side_dist_x += rd->delta_dist_x;
+			rd->map_x += rd->step_x;
 			rd->side = 0;
 		}
 		else
 		{
-			rd->sideDistY += rd->deltaDistY;
-			rd->mapY += rd->stepY;
+			rd->side_dist_y += rd->delta_dist_y;
+			rd->map_y += rd->step_y;
 			rd->side = 1;
 		}
 		// Check if we're out of bounds first
-		if (rd->mapX < 0 || rd->mapX >= mapWidth || rd->mapY < 0
-			|| rd->mapY >= mapHeight)
+		if (rd->map_x < 0 || rd->map_x >= mapWidth || rd->map_y < 0
+			|| rd->map_y >= mapHeight)
 		{
 			rd->hit = 1;
 			// Treat as a wall hit
-			rd->mapX = fmax(0, fmin(rd->mapX, mapWidth - 1));
+			rd->map_x = fmax(0, fmin(rd->map_x, mapWidth - 1));
 			// Clamp to valid indices
-			rd->mapY = fmax(0, fmin(rd->mapY, mapHeight - 1));
+			rd->map_y = fmax(0, fmin(rd->map_y, mapHeight - 1));
 		}
 		// Then check for wall collision
-		else if (game->map_s->map[rd->mapX][rd->mapY] == '1')
+		else if (game->map_s->map[rd->map_x][rd->map_y] == '1')
 		{
 			rd->hit = 1;
 		}
@@ -93,9 +93,9 @@ t_bool	calculate_wall_distance_state(t_game *game)
 
 	rd = game->ray_data;
 	if (rd->side == 0)
-		rd->perpWallDist = (rd->sideDistX - rd->deltaDistX);
+		rd->perp_wall_dist = (rd->side_dist_x - rd->delta_dist_x);
 	else
-		rd->perpWallDist = (rd->sideDistY - rd->deltaDistY);
+		rd->perp_wall_dist = (rd->side_dist_y - rd->delta_dist_y);
 	game->state = calculate_wall_drawing_bounds_state;
 	return (TRUE);
 }
@@ -106,14 +106,14 @@ t_bool	calculate_wall_drawing_bounds_state(t_game *game)
 
 	rd = game->ray_data;
 	// Calculate height of line to draw on screen
-	rd->lineHeight = (int)(screenHeight / rd->perpWallDist);
+	rd->line_height = (int)(SCREEN_HEIGHT / rd->perp_wall_dist);
 	// calculate lowest and highest pixel to fill in current stripe
-	rd->drawStart = -rd->lineHeight / 2 + screenHeight / 2;
-	if (rd->drawStart < 0)
-		rd->drawStart = 0;
-	rd->drawEnd = rd->lineHeight / 2 + screenHeight / 2;
-	if (rd->drawEnd >= screenHeight)
-		rd->drawEnd = screenHeight - 1;
+	rd->draw_start = -rd->line_height / 2 + SCREEN_HEIGHT / 2;
+	if (rd->draw_start < 0)
+		rd->draw_start = 0;
+	rd->draw_end = rd->line_height / 2 + SCREEN_HEIGHT / 2;
+	if (rd->draw_end >= SCREEN_HEIGHT)
+		rd->draw_end = SCREEN_HEIGHT - 1;
 	game->state = calculate_texture_coordinates_state;
 	return (TRUE);
 }
@@ -126,20 +126,20 @@ t_bool	calculate_texture_coordinates_state(t_game *game)
 	// calculate value of wallX
 	// where exactly the wall was hit
 	if (rd->side == 0)
-		rd->wallX = game->player->posY + rd->perpWallDist * rd->rayDirY;
+		rd->wall_x = game->player->pos_y + rd->perp_wall_dist * rd->ray_dir_y;
 	else
-		rd->wallX = game->player->posX + rd->perpWallDist * rd->rayDirX;
-	rd->wallX -= floor(rd->wallX);
+		rd->wall_x = game->player->pos_x + rd->perp_wall_dist * rd->ray_dir_x;
+	rd->wall_x -= floor(rd->wall_x);
 	// x coordinate on the texture
-	rd->texX = (int)(rd->wallX * (double)texWidth);
-	if (rd->side == 0 && rd->rayDirX > 0)
-		rd->texX = texWidth - rd->texX - 1;
-	if (rd->side == 1 && rd->rayDirY < 0)
-		rd->texX = texWidth - rd->texX - 1;
+	rd->tex_x = (int)(rd->wall_x * (double)TEXTURE_WIDTH);
+	if (rd->side == 0 && rd->ray_dir_x > 0)
+		rd->tex_x = TEXTURE_WIDTH - rd->tex_x - 1;
+	if (rd->side == 1 && rd->ray_dir_y < 0)
+		rd->tex_x = TEXTURE_WIDTH - rd->tex_x - 1;
 	// Calculate step and initial texture position
-	rd->step = 1.0 * texHeight / rd->lineHeight;
-	rd->texPos = (rd->drawStart - (double)screenHeight / 2
-			+ (double)rd->lineHeight / 2) * rd->step;
+	rd->step = 1.0 * TEXTURE_HEIGHT / rd->line_height;
+	rd->tex_pos = (rd->draw_start - (double)SCREEN_HEIGHT / 2
+			+ (double)rd->line_height / 2) * rd->step;
 	game->state = render_walls_floor_ceiling_state;
 	return (TRUE);
 }

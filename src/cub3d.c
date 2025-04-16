@@ -68,7 +68,7 @@ int	main(int argc, char *argv[])
 		y++;
 	}
 	printf("Player x: %d, Player y: %d", map_s.player_x, map_s.player_y);
-	if (!(mlx = mlx_init(screenWidth, screenHeight, "my_game", true)))
+	if (!(mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "my_game", true)))
 		return (EXIT_FAILURE);
 	game = game_factory(mlx, &map_s);
 	if (!game)

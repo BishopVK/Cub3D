@@ -2,9 +2,9 @@
 
 t_bool	update_frame_data_state(t_game *game)
 {
-	game->oldTime = game->time;
+	game->old_time = game->time;
 	game->time = mlx_get_time();
-	game->frameTime = (game->time - game->oldTime);
+	game->frame_time = (game->time - game->old_time);
 	// printf("FPS: %f\n", 1.0 / game->frameTime);
 	game->is_done = TRUE;
 	return (TRUE);
@@ -18,10 +18,10 @@ t_bool	render_frame_state(t_game *game)
 
 	x = 0;
 	y = 0;
-	while (y < screenHeight)
+	while (y < SCREEN_HEIGHT)
 	{
 		x = 0;
-		while (x < screenWidth)
+		while (x < SCREEN_WIDTH)
 		{
 			color = game->buffer[y][x];
 			game->buffer[y][x] = 0x00000000; // Clear the buffer

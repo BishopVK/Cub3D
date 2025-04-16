@@ -13,12 +13,12 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# define screenWidth 1280 // 640
-# define screenHeight 960 // 480
-# define texWidth 64
-# define texHeight 64
-# define mapWidth 10
-# define mapHeight 10
+# define SCREEN_WIDTH 1280 // 640
+# define SCREEN_HEIGHT 960 // 480
+# define TEXTURE_WIDTH 64
+# define TEXTURE_HEIGHT 64
+# define mapWidth 10 // TODO: Remover por el ancho real del mapa
+# define mapHeight 10 // TODO: Remover por el alto real del mapa
 
 // libft
 # include "libft/libft.h"
@@ -59,42 +59,42 @@ typedef enum e_bool
 typedef struct s_player
 {
 	// x and y start position
-	double			posX;
-	double			posY;
+	double			pos_x;
+	double			pos_y;
 
 	// initial direction vector
-	double			dirX;
-	double			dirY;
+	double			dir_x;
+	double			dir_y;
 
 	// the 2d raycaster version of camera
-	double			planeX;
-	double			planeY;
+	double			plane_x;
+	double			plane_y;
 }					t_player;
 
 typedef struct s_ray_data
 {
-	double			cameraX;
-	double			rayDirX;
-	double			rayDirY;
-	int				mapX;
-	int				mapY;
-	double			sideDistX;
-	double			sideDistY;
-	double			deltaDistX;
-	double			deltaDistY;
-	double			perpWallDist;
-	int				stepX;
-	int				stepY;
+	double			camera_x;
+	double			ray_dir_x;
+	double			ray_dir_y;
+	int				map_x;
+	int				map_y;
+	double			side_dist_x;
+	double			side_dist_y;
+	double			delta_dist_x;
+	double			delta_dist_y;
+	double			perp_wall_dist;
+	int				step_x;
+	int				step_y;
 	int				hit;
 	int				side;
-	int				lineHeight;
-	int				drawStart;
-	int				drawEnd;
-	int				texNum;
-	double			wallX;
-	int				texX;
+	int				line_height;
+	int				draw_start;
+	int				draw_end;
+	int				tex_num;
+	double			wall_x;
+	int				tex_x;
 	double			step;
-	double			texPos;
+	double			tex_pos;
 }					t_ray_data;
 
 typedef struct s_rgb
@@ -201,17 +201,15 @@ typedef struct s_game
 
 	t_ray_data		*ray_data;
 
-	uint32_t		buffer[screenHeight][screenWidth];
-
-	// char			world_map[mapWidth][mapHeight];
+	uint32_t		buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
 
 	t_map			*map_s;
 
 	mlx_image_t		*screen;
 
 	double			time;
-	double			oldTime;
-	double			frameTime;
+	double			old_time;
+	double			frame_time;
 
 	int				x;
 
@@ -283,19 +281,19 @@ void				init_flood_fill(t_map *map_s);
 //////////////////////////////////////////////////////////
 //					GAME ENGINE FOLDER                  //
 //////////////////////////////////////////////////////////
-t_bool			calculate_ray_direction_state(t_game *game);
-t_bool			perform_dda_state(t_game *game);
-t_bool			update_x_axis_state(t_game *game);
-t_bool			render_walls_floor_ceiling_state(t_game *game);
-t_bool			calculate_wall_distance_state(t_game *game);
-t_bool			calculate_wall_drawing_bounds_state(t_game *game);
-t_bool			calculate_texture_coordinates_state(t_game *game);
-t_bool			check_x_axis_state(t_game *game);
-t_bool			render_frame_state(t_game *game);
-t_bool			update_frame_data_state(t_game *game);
-t_player		*player_factory(double x, double y);
-t_game			*game_factory(mlx_t *mlx, t_map *map);
-void			handle_input(t_game *game);
-void			ft_game_hook(void *param);
+t_bool				calculate_ray_direction_state(t_game *game);
+t_bool				perform_dda_state(t_game *game);
+t_bool				update_x_axis_state(t_game *game);
+t_bool				render_walls_floor_ceiling_state(t_game *game);
+t_bool				calculate_wall_distance_state(t_game *game);
+t_bool				calculate_wall_drawing_bounds_state(t_game *game);
+t_bool				calculate_texture_coordinates_state(t_game *game);
+t_bool				check_x_axis_state(t_game *game);
+t_bool				render_frame_state(t_game *game);
+t_bool				update_frame_data_state(t_game *game);
+t_player			*player_factory(double x, double y);
+t_game				*game_factory(mlx_t *mlx, t_map *map);
+void				handle_input(t_game *game);
+void				ft_game_hook(void *param);
 
 #endif
