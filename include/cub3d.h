@@ -17,8 +17,6 @@
 # define SCREEN_HEIGHT 960 // 480
 # define TEXTURE_WIDTH 64
 # define TEXTURE_HEIGHT 64
-# define mapWidth 10 // TODO: Remover por el ancho real del mapa
-# define mapHeight 10 // TODO: Remover por el alto real del mapa
 
 // libft
 # include "libft/libft.h"
