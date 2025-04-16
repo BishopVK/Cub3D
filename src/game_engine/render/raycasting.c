@@ -30,7 +30,8 @@ t_bool	calculate_ray_direction_state(t_game *game)
 	else
 	{
 		rd->step_x = 1;
-		rd->side_dist_x = (rd->map_x + 1.0 - game->player->pos_x) * rd->delta_dist_x;
+		rd->side_dist_x = (rd->map_x + 1.0 - game->player->pos_x)
+			* rd->delta_dist_x;
 	}
 	if (rd->ray_dir_y < 0)
 	{
@@ -40,7 +41,8 @@ t_bool	calculate_ray_direction_state(t_game *game)
 	else
 	{
 		rd->step_y = 1;
-		rd->side_dist_y = (rd->map_y + 1.0 - game->player->pos_y) * rd->delta_dist_y;
+		rd->side_dist_y = (rd->map_y + 1.0 - game->player->pos_y)
+			* rd->delta_dist_y;
 	}
 	game->state = perform_dda_state;
 	return (TRUE);
@@ -67,17 +69,14 @@ t_bool	perform_dda_state(t_game *game)
 			rd->map_y += rd->step_y;
 			rd->side = 1;
 		}
-		// Check if we're out of bounds first
+		// TODO: Cambiar mapWidth y mapHeight por el tamaño del mapa real
 		if (rd->map_x < 0 || rd->map_x >= mapWidth || rd->map_y < 0
 			|| rd->map_y >= mapHeight)
 		{
 			rd->hit = 1;
-			// Treat as a wall hit
 			rd->map_x = fmax(0, fmin(rd->map_x, mapWidth - 1));
-			// Clamp to valid indices
 			rd->map_y = fmax(0, fmin(rd->map_y, mapHeight - 1));
 		}
-		// Then check for wall collision
 		else if (game->map_s->map[rd->map_x][rd->map_y] == '1')
 		{
 			rd->hit = 1;

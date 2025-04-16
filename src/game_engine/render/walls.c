@@ -11,7 +11,7 @@ t_bool	render_walls_floor_ceiling_state(t_game *game)
 	t_ray_data	*rd;
 	int			drawStart;
 	int			drawEnd;
-		uint32_t color;
+	uint32_t	color;
 
 	rd = game->ray_data;
 	drawStart = rd->draw_start;
@@ -31,16 +31,16 @@ t_bool	render_walls_floor_ceiling_state(t_game *game)
 	{
 		if (rd->side == 0)
 		{                                    // X-axis wall hit (east/west)
-			if (rd->step_x > 0)               // East-facing wall (to the right)
+			if (rd->step_x > 0)              // East-facing wall (to the right)
 				color = from_rgb(255, 0, 0); // Red
 			else                             // West-facing wall (to the left)
 				color = from_rgb(0, 255, 0); // Green
 		}
 		else
-		{                                      // Y-axis wall hit (north/south)
+		{ // Y-axis wall hit (north/south)
 			if (rd->step_y > 0)
 				// South-facing wall (behind at start)
-				color = from_rgb(0, 0, 255);   // Blue
+				color = from_rgb(0, 0, 255); // Blue
 			else
 				// North-facing wall (in front at start)
 				color = from_rgb(255, 255, 0); // Yellow

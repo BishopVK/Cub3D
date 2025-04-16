@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fram.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/15 18:01:21 by serferna          #+#    #+#             */
+/*   Updated: 2025/04/15 18:01:21 by serferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../include/cub3d.h"
 
 t_bool	update_frame_data_state(t_game *game)
@@ -24,7 +36,7 @@ t_bool	render_frame_state(t_game *game)
 		while (x < SCREEN_WIDTH)
 		{
 			color = game->buffer[y][x];
-			game->buffer[y][x] = 0x00000000; // Clear the buffer
+			game->buffer[y][x] = 0x00000000;
 			mlx_put_pixel(game->screen, x, y, color);
 			x++;
 		}
