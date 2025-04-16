@@ -7,11 +7,11 @@ t_player	*player_factory(double x, double y)
 	player = malloc(sizeof(t_player));
 	if (!player)
 		return (NULL);
-	player->posX = x;
-	player->posY = y;
-	player->dirX = -1.0;
-	player->dirY = 0.0;
-	player->planeX = 0.0;
-	player->planeY = 0.7;
+	player->pos_x = x;
+	player->pos_y = y;
+	player->dir_x = -1.0;
+	player->dir_y = 0.0;
+	player->plane_x = 0.0;
+	player->plane_y = 0.7;
 	return (player);
 }

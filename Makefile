@@ -48,7 +48,7 @@ SRC				=	$(SRC_DIR)/cub3d.c \
 					./src/game_engine/render/frame.c \
 					./src/game_engine/render/raycasting.c \
 					./src/game_engine/render/walls.c \
-					./src/game_engine/states/game_states.c \
+					./src/game_engine/render/game_states.c \
 
 OBJ				=	$(SRC:.c=.o)
 

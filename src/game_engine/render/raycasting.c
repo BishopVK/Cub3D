@@ -1,4 +1,7 @@
 #include "../../../include/cub3d.h"
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 t_bool	calculate_ray_direction_state(t_game *game)
 {
@@ -6,6 +9,7 @@ t_bool	calculate_ray_direction_state(t_game *game)
 
 	rd = game->ray_data;
 	rd->camera_x = 2 * game->x / (double)SCREEN_WIDTH - 1;
+	printf("Camera_x: %f\n", rd->camera_x);
 	rd->ray_dir_x = game->player->dir_x + game->player->plane_x * rd->camera_x;
 	rd->ray_dir_y = game->player->dir_y + game->player->plane_y * rd->camera_x;
 	// which box of the map we're in
@@ -16,6 +20,7 @@ t_bool	calculate_ray_direction_state(t_game *game)
 		rd->delta_dist_x = 1e30;
 	else
 		rd->delta_dist_x = fabs(1 / rd->ray_dir_x);
+		// dont simplyfy using fabs
 	if (rd->ray_dir_y == 0)
 		rd->delta_dist_y = 1e30;
 	else
@@ -69,18 +74,9 @@ t_bool	perform_dda_state(t_game *game)
 			rd->map_y += rd->step_y;
 			rd->side = 1;
 		}
-		// TODO: Cambiar mapWidth y mapHeight por el tamaño del mapa real
-		if (rd->map_x < 0 || rd->map_x >= mapWidth || rd->map_y < 0
-			|| rd->map_y >= mapHeight)
-		{
+
+		if (game->map_s->map[rd->map_x][rd->map_y] == '1')
 			rd->hit = 1;
-			rd->map_x = fmax(0, fmin(rd->map_x, mapWidth - 1));
-			rd->map_y = fmax(0, fmin(rd->map_y, mapHeight - 1));
-		}
-		else if (game->map_s->map[rd->map_x][rd->map_y] == '1')
-		{
-			rd->hit = 1;
-		}
 	}
 	game->state = calculate_wall_distance_state;
 	return (TRUE);
@@ -140,5 +136,6 @@ t_bool	calculate_texture_coordinates_state(t_game *game)
 	rd->tex_pos = (rd->draw_start - (double)SCREEN_HEIGHT / 2
 			+ (double)rd->line_height / 2) * rd->step;
 	game->state = render_walls_floor_ceiling_state;
+	printf("\nHello\n");
 	return (TRUE);
 }

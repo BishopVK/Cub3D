@@ -283,12 +283,12 @@ void				init_flood_fill(t_map *map_s);
 //////////////////////////////////////////////////////////
 t_bool				calculate_ray_direction_state(t_game *game);
 t_bool				perform_dda_state(t_game *game);
-t_bool				update_x_axis_state(t_game *game);
+t_bool				check_ray_completion_state(t_game *game);
+t_bool				advance_to_next_ray_state(t_game *game);
 t_bool				render_walls_floor_ceiling_state(t_game *game);
 t_bool				calculate_wall_distance_state(t_game *game);
 t_bool				calculate_wall_drawing_bounds_state(t_game *game);
 t_bool				calculate_texture_coordinates_state(t_game *game);
-t_bool				check_x_axis_state(t_game *game);
 t_bool				render_frame_state(t_game *game);
 t_bool				update_frame_data_state(t_game *game);
 t_player			*player_factory(double x, double y);

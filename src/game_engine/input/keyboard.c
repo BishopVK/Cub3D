@@ -1,119 +1,107 @@
 
 #include "../../../include/cub3d.h"
+#include <stdio.h>
 
 t_bool	is_char_walkable(char c)
 {
 	return (c == '0' || c == 'W' || c == 'N' || c == 'S' || c == 'E');
 }
 
-void	move_forward(t_game *game, double moveSpeed)
+void	move_forward(t_game *game, double move_speed)
 {
-	// if (game->map_s->map[(int)(game->player->posX + game->player->dirX
-	// 		* moveSpeed)][(int)game->player->posY] == '0')
-	// 	game->player->posX += game->player->dirX * moveSpeed;
-	// if (game->map_s->map[(int)game->player->posX][(int)(game->player->posY
-	// 		+ game->player->dirY * moveSpeed)] == '0')
-	// 	game->player->posY += game->player->dirY * moveSpeed;
-	if (is_char_walkable(game->map_s->map[(int)(game->player->posX + game->player->dirX * moveSpeed)][(int)game->player->posY]))
-		game->player->posX += game->player->dirX * moveSpeed;
-	if (is_char_walkable(game->map_s->map[(int)game->player->posX][(int)(game->player->posY + game->player->dirY * moveSpeed)]))
-		game->player->posY += game->player->dirY * moveSpeed;
+	if (is_char_walkable(game->map_s->map[(int)(game->player->pos_x
+				+ game->player->dir_x * move_speed)][(int)game->player->pos_y]))
+		game->player->pos_x += game->player->dir_x * move_speed;
+	if (is_char_walkable(game->map_s->map[(int)game->player->pos_x][(int)(game->player->pos_y
+				+ game->player->dir_y * move_speed)]))
+		game->player->pos_y += game->player->dir_y * move_speed;
 }
 
-void	move_backward(t_game *game, double moveSpeed)
+void	move_backward(t_game *game, double move_speed)
 {
-	// if (game->map_s->map[(int)(game->player->posX - game->player->dirX
-	// 		* moveSpeed)][(int)game->player->posY] == '0')
-	// 	game->player->posX -= game->player->dirX * moveSpeed;
-	// if (game->map_s->map[(int)game->player->posX][(int)(game->player->posY
-	// 		- game->player->dirY * moveSpeed)] == '0')
-	// 	game->player->posY -= game->player->dirY * moveSpeed;
-	if (is_char_walkable(game->map_s->map[(int)(game->player->posX - game->player->dirX * moveSpeed)][(int)game->player->posY]))
-		game->player->posX -= game->player->dirX * moveSpeed;
-	if (is_char_walkable(game->map_s->map[(int)game->player->posX][(int)(game->player->posY - game->player->dirY * moveSpeed)]))
-		game->player->posY -= game->player->dirY * moveSpeed;
+	if (is_char_walkable(game->map_s->map[(int)(game->player->pos_x
+				- game->player->dir_x * move_speed)][(int)game->player->pos_y]))
+		game->player->pos_x -= game->player->dir_x * move_speed;
+	if (is_char_walkable(game->map_s->map[(int)game->player->pos_x][(int)(game->player->pos_y
+				- game->player->dir_y * move_speed)]))
+		game->player->pos_y -= game->player->dir_y * move_speed;
 }
 
-void	move_left(t_game *game, double moveSpeed)
+void	move_left(t_game *game, double move_speed)
 {
-	// if (game->map_s->map[(int)(game->player->posX - game->player->planeX
-	// 		* moveSpeed)][(int)game->player->posY] == '0')
-	// 	game->player->posX -= game->player->planeX * moveSpeed;
-	// if (game->map_s->map[(int)game->player->posX][(int)(game->player->posY
-	// 		- game->player->planeY * moveSpeed)] == '0')
-	// 	game->player->posY -= game->player->planeY * moveSpeed;
-	if (is_char_walkable(game->map_s->map[(int)(game->player->posX - game->player->planeX * moveSpeed)][(int)game->player->posY]))
-		game->player->posX -= game->player->planeX * moveSpeed;
-	if (is_char_walkable(game->map_s->map[(int)game->player->posX][(int)(game->player->posY - game->player->planeY * moveSpeed)]))
-		game->player->posY -= game->player->planeY * moveSpeed;
+	if (is_char_walkable(game->map_s->map[(int)(game->player->pos_x
+				- game->player->plane_x
+				* move_speed)][(int)game->player->pos_y]))
+		game->player->pos_x -= game->player->plane_x * move_speed;
+	if (is_char_walkable(game->map_s->map[(int)game->player->pos_x][(int)(game->player->pos_y
+				- game->player->plane_y * move_speed)]))
+		game->player->pos_y -= game->player->plane_y * move_speed;
 }
 
-void	move_right(t_game *game, double moveSpeed)
+void	move_right(t_game *game, double move_speed)
 {
-	// if (game->map_s->map[(int)(game->player->posX + game->player->planeX
-	// 		* moveSpeed)][(int)game->player->posY] == '0')
-	// 	game->player->posX += game->player->planeX * moveSpeed;
-	// if (game->map_s->map[(int)game->player->posX][(int)(game->player->posY
-	// 		+ game->player->planeY * moveSpeed)] == '0')
-	// 	game->player->posY += game->player->planeY * moveSpeed;
-	if (is_char_walkable(game->map_s->map[(int)(game->player->posX + game->player->planeX * moveSpeed)][(int)game->player->posY]))
-		game->player->posX += game->player->planeX * moveSpeed;
-	if (is_char_walkable(game->map_s->map[(int)game->player->posX][(int)(game->player->posY + game->player->planeY * moveSpeed)]))
-		game->player->posY += game->player->planeY * moveSpeed;
+	if (is_char_walkable(game->map_s->map[(int)(game->player->pos_x
+				+ game->player->plane_x
+				* move_speed)][(int)game->player->pos_y]))
+		game->player->pos_x += game->player->plane_x * move_speed;
+	if (is_char_walkable(game->map_s->map[(int)game->player->pos_x][(int)(game->player->pos_y
+				+ game->player->plane_y * move_speed)]))
+		game->player->pos_y += game->player->plane_y * move_speed;
 }
 
-void	rotate_left(t_game *game, double rotSpeed)
+void	rotate_left(t_game *game, double rotation_speed)
 {
-	double	oldDirX;
-	double	oldPlaneX;
+	double	old_dir_x;
+	double	old_plane_x;
 
-	oldDirX = game->player->dirX;
-	game->player->dirX = game->player->dirX * cos(rotSpeed) - game->player->dirY
-		* sin(rotSpeed);
-	game->player->dirY = oldDirX * sin(rotSpeed) + game->player->dirY
-		* cos(rotSpeed);
-	oldPlaneX = game->player->planeX;
-	game->player->planeX = game->player->planeX * cos(rotSpeed)
-		- game->player->planeY * sin(rotSpeed);
-	game->player->planeY = oldPlaneX * sin(rotSpeed) + game->player->planeY
-		* cos(rotSpeed);
+	old_dir_x = game->player->dir_x;
+	game->player->dir_x = game->player->dir_x * cos(rotation_speed)
+		- game->player->dir_y * sin(rotation_speed);
+	game->player->dir_y = old_dir_x * sin(rotation_speed) + game->player->dir_y
+		* cos(rotation_speed);
+	old_plane_x = game->player->plane_x;
+	game->player->plane_x = game->player->plane_x * cos(rotation_speed)
+		- game->player->plane_y * sin(rotation_speed);
+	game->player->plane_y = old_plane_x * sin(rotation_speed) + game->player->plane_y
+		* cos(rotation_speed);
 }
 
-void	rotate_right(t_game *game, double rotSpeed)
+void	rotate_right(t_game *game, double rotation_speed)
 {
-	double	oldDirX;
-	double	oldPlaneX;
+	double	old_dir_x;
+	double	old_plane_x;
 
-	oldDirX = game->player->dirX;
-	game->player->dirX = game->player->dirX * cos(-rotSpeed)
-		- game->player->dirY * sin(-rotSpeed);
-	game->player->dirY = oldDirX * sin(-rotSpeed) + game->player->dirY
-		* cos(-rotSpeed);
-	oldPlaneX = game->player->planeX;
-	game->player->planeX = game->player->planeX * cos(-rotSpeed)
-		- game->player->planeY * sin(-rotSpeed);
-	game->player->planeY = oldPlaneX * sin(-rotSpeed) + game->player->planeY
-		* cos(-rotSpeed);
+	printf("Rotating right\n");
+	old_dir_x = game->player->dir_x;
+	game->player->dir_x = game->player->dir_x * cos(-rotation_speed)
+		- game->player->dir_y * sin(-rotation_speed);
+	game->player->dir_y = old_dir_x * sin(-rotation_speed) + game->player->dir_y
+		* cos(-rotation_speed);
+	old_plane_x = game->player->plane_x;
+	game->player->plane_x = game->player->plane_x * cos(-rotation_speed)
+		- game->player->plane_y * sin(-rotation_speed);
+	game->player->plane_y = old_plane_x * sin(-rotation_speed)
+		+ game->player->plane_y * cos(-rotation_speed);
 }
 
 void	handle_input(t_game *game)
 {
-	double	moveSpeed;
-	double	rotSpeed;
+	double	move_speed;
+	double	rotation_speed;
 
 	// Calculate movement speed based on frame time
-	moveSpeed = game->frameTime * 1.5;
-	rotSpeed = game->frameTime * 2.0;
+	move_speed = game->frame_time * 1.5;
+	rotation_speed = game->frame_time * 2.0;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_W))
-		move_forward(game, moveSpeed);
+		move_forward(game, move_speed);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_S))
-		move_backward(game, moveSpeed);
+		move_backward(game, move_speed);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_A))
-		move_left(game, moveSpeed);
+		move_left(game, move_speed);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_D))
-		move_right(game, moveSpeed);
+		move_right(game, move_speed);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
-		rotate_left(game, rotSpeed);
+		rotate_left(game, rotation_speed);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
-		rotate_right(game, rotSpeed);
+		rotate_right(game, rotation_speed);
 }
