@@ -1,6 +1,5 @@
 
 #include "../../../include/cub3d.h"
-#include <stdio.h>
 
 t_bool	is_char_walkable(char c)
 {
@@ -71,7 +70,6 @@ void	rotate_right(t_game *game, double rotation_speed)
 	double	old_dir_x;
 	double	old_plane_x;
 
-	printf("Rotating right\n");
 	old_dir_x = game->player->dir_x;
 	game->player->dir_x = game->player->dir_x * cos(-rotation_speed)
 		- game->player->dir_y * sin(-rotation_speed);

@@ -9,7 +9,6 @@ t_bool	calculate_ray_direction_state(t_game *game)
 
 	rd = game->ray_data;
 	rd->camera_x = 2 * game->x / (double)SCREEN_WIDTH - 1;
-	printf("Camera_x: %f\n", rd->camera_x);
 	rd->ray_dir_x = game->player->dir_x + game->player->plane_x * rd->camera_x;
 	rd->ray_dir_y = game->player->dir_y + game->player->plane_y * rd->camera_x;
 	// which box of the map we're in
@@ -136,6 +135,5 @@ t_bool	calculate_texture_coordinates_state(t_game *game)
 	rd->tex_pos = (rd->draw_start - (double)SCREEN_HEIGHT / 2
 			+ (double)rd->line_height / 2) * rd->step;
 	game->state = render_walls_floor_ceiling_state;
-	printf("\nHello\n");
 	return (TRUE);
 }

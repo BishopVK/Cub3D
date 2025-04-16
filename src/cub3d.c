@@ -51,21 +51,21 @@ int	main(int argc, char *argv[])
 	print_map(map_s.map);
 	x = 0;
 	y = 0;
-	while (map_s.map[y])
+	while (map_s.map[x])
 	{
-		x = 0;
-		while (map_s.map[y][x])
+		y = 0;
+		while (map_s.map[x][y])
 		{
-			if (map_s.map[y][x] == 'N' || map_s.map[y][x] == 'S'
-				|| map_s.map[y][x] == 'E' || map_s.map[y][x] == 'W')
+			if (map_s.map[x][y] == 'N' || map_s.map[x][y] == 'S'
+				|| map_s.map[x][y] == 'E' || map_s.map[x][y] == 'W')
 			{
 				map_s.player_x = x;
 				map_s.player_y = y;
 				break ;
 			}
-			x++;
+			y++;
 		}
-		y++;
+		x++;
 	}
 	printf("Player x: %d, Player y: %d", map_s.player_x, map_s.player_y);
 	if (!(mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "my_game", true)))
