@@ -6,7 +6,7 @@
 /*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:52:43 by danjimen          #+#    #+#             */
-/*   Updated: 2025/04/17 22:52:42 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/04/17 23:33:37 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ void	exit_map_error(t_map *map_s, char *message, int fd)
 	if (map_s->chars->buffer_trimed != NULL)
 		free(map_s->chars->buffer_trimed);
 	free_elements(map_s);
+	free_double_pointer(map_s->map);
 	free_double_pointer(map_s->game_map );
-	if (map_s->game_map != NULL)
-		free_double_pointer(map_s->game_map );
 	if (fd > 0)
 	{
 		get_next_line(fd, true);
