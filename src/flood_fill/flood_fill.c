@@ -6,7 +6,7 @@
 /*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 00:00:33 by danjimen          #+#    #+#             */
-/*   Updated: 2025/04/05 03:55:21 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/04/17 21:40:40 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,16 +171,6 @@ void	init_flood_fill(t_map *map_s)
 	char	**copy_upscale;
 
 	copy = duplicate_array(map_s);
-	int i = 0; // DB
-	while(copy[5][i]) // DB
-	{ // DB
-		if (copy[5][i] == '\n') // DB
-			printf("Char %i = '\\n'\n", i); // DB
-		else // DB
-			printf("Char %i = '%c'\n", i, copy[5][i]); // DB
-		i++; // DB
-	} // DB
-	printf("\n-- COPY --\n"); // DB
 	print_map(copy); // DB
 	flood_fill_pieces(map_s, copy, map_s->corner_y, map_s->corner_x);
 	printf("\n-- AFTER FLOOD FILL --\n"); // DB
