@@ -6,12 +6,13 @@
 /*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 00:00:33 by danjimen          #+#    #+#             */
-/*   Updated: 2025/04/17 21:40:40 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/04/17 23:14:30 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
+// DB (REMOVE FUNCTION)
 void	count_pieces(t_map *map_s, char **copy)
 {
 	int	i;
@@ -47,9 +48,11 @@ void	count_chars(t_map *map_s, char **copy)
 	int	i;
 	int	j;
 	int	count_chars;
+	int	count_2;
 
 	i = 0;
 	count_chars = 0;
+	count_2 = 0;
 	while (copy[i])
 	{
 		j = 0;
@@ -58,12 +61,21 @@ void	count_chars(t_map *map_s, char **copy)
 			if (copy[i][j] == '1' || copy[i][j] == '0' || copy[i][j] == 'N'
 				|| copy[i][j] == 'S' || copy[i][j] == 'W' || copy[i][j] == 'E')
 					count_chars++;
+			if (copy[i][j] == '2')
+				count_2++;
 			j++;
 		}
 		i++;
 	}
+	printf("Huecos en el mapa = %i\n", count_2); // DB
 	printf("Chars mapa original = %i\n", map_s->total_map_chars); // DB
 	printf("Chars mapa comprobado = %i\n", count_chars); // DB
+	if (count_2 != 0)
+	{
+		free_double_pointer(copy);
+		exit_map_error(map_s, "Maps whith holes not allowed", -1);
+		exit (EXIT_FAILURE);
+	}
 	if (count_chars != map_s->total_map_chars)
 	{
 		free_double_pointer(copy);
@@ -74,6 +86,7 @@ void	count_chars(t_map *map_s, char **copy)
 		printf("MAPA CERRADO!! PUEDES CONTINUAR\n"); // DB */
 }
 
+// DB (REMOVE FUNCTION)
 void	flood_fill_pieces(t_map *map_s, char **copy, int x, int y)
 {
 	if (x < map_s->corner_y || x > map_s->map_height
@@ -123,7 +136,7 @@ char	**duplicate_array(t_map *map_s)
 	return (copy);
 }
 
-char	**dupe_and_upscale_array(t_map *map_s)
+char	**dupe_and_upscale_array(t_map *map_s, char c)
 {
 	char	**copy;
 	int		i;
@@ -132,11 +145,11 @@ char	**dupe_and_upscale_array(t_map *map_s)
 	i = 0;
 	copy = (char **)malloc((map_s->map_height + 3) * sizeof(char *));
 	copy[0] = (char *)malloc(map_s->map_max_width + 3);
-	ft_memset(copy[0], '2', map_s->map_max_width + 1);
+	ft_memset(copy[0], c, map_s->map_max_width + 1);
 	copy[0][map_s->map_max_width + 1] = '\n';
 	copy[0][map_s->map_max_width + 2] = '\0';
 	copy[map_s->map_height + 1] = (char *)malloc(map_s->map_max_width + 3);
-	ft_memset(copy[map_s->map_height + 1], '2', map_s->map_max_width + 1);
+	ft_memset(copy[map_s->map_height + 1], c, map_s->map_max_width + 1);
 	copy[map_s->map_height + 1][map_s->map_max_width + 1] = '\n';
 	copy[map_s->map_height + 1][map_s->map_max_width + 2] = '\0';
 	while (i < map_s->map_height)
@@ -149,8 +162,8 @@ char	**dupe_and_upscale_array(t_map *map_s)
 			exit (EXIT_FAILURE);
 		}
 		j = 0;
-		copy[i + 1][0] = '2';
-		ft_memset(copy[i + 1], '2', map_s->map_max_width + 1);
+		copy[i + 1][0] = c;
+		ft_memset(copy[i + 1], c, map_s->map_max_width + 1);
 		while(map_s->map[i][j])
 		{
 			if (map_s->map[i][j] != '\n' && map_s->map[i][j] != ' ')
@@ -167,17 +180,18 @@ char	**dupe_and_upscale_array(t_map *map_s)
 
 void	init_flood_fill(t_map *map_s)
 {
-	char	**copy;
+	//char	**copy;
 	char	**copy_upscale;
 
-	copy = duplicate_array(map_s);
-	print_map(copy); // DB
-	flood_fill_pieces(map_s, copy, map_s->corner_y, map_s->corner_x);
+	/* copy = duplicate_array(map_s);
+	printf("\n-- MAP COPY --\n"); // DB
+	print_map(copy); // DB */
+	/* flood_fill_pieces(map_s, copy, map_s->corner_y, map_s->corner_x);
 	printf("\n-- AFTER FLOOD FILL --\n"); // DB
 	print_map(copy); // DB
 	count_pieces(map_s, copy);
-	free_double_pointer(copy);
-	copy_upscale = dupe_and_upscale_array(map_s);
+	free_double_pointer(copy); */
+	copy_upscale = dupe_and_upscale_array(map_s, '2');
 	printf("\n-- COPY UPSCALE --\n"); // DB
 	print_map(copy_upscale); // DB
 	flood_fill_open(map_s, copy_upscale, 0, 0);
@@ -185,6 +199,9 @@ void	init_flood_fill(t_map *map_s)
 	print_map(copy_upscale); // DB
 	count_chars(map_s, copy_upscale);
 	free_double_pointer(copy_upscale);
+	/* map_s->game_map = dupe_and_upscale_array(map_s, '1');
+	printf("\n-- GAME MAP for SERGIO --\n"); // DB
+	print_map(map_s->game_map); // DB */
 }
 
 /* void	flood_fill(t_map_chars *copy_chars, t_map *copy_array,
