@@ -289,8 +289,8 @@ t_bool				calculate_wall_drawing_bounds_state(t_game *game);
 t_bool				calculate_texture_coordinates_state(t_game *game);
 t_bool				render_frame_state(t_game *game);
 t_bool				update_frame_data_state(t_game *game);
-t_player			*player_factory(double x, double y);
-t_game				*game_factory(mlx_t *mlx, t_map *map);
+t_player			*player_factory(double x, double y, char dir);
+t_game				*game_factory(mlx_t *mlx, t_map *map, char dir);
 void				handle_input(t_game *game);
 void				ft_game_hook(void *param);
 

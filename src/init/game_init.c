@@ -1,7 +1,7 @@
 
 #include "../../include/cub3d.h"
 
-t_game	*game_factory(mlx_t *mlx, t_map *map_s)
+t_game	*game_factory(mlx_t *mlx, t_map *map_s, char dir)
 {
 	t_game	*game;
 
@@ -10,7 +10,7 @@ t_game	*game_factory(mlx_t *mlx, t_map *map_s)
 		return (NULL);
 	game->mlx = mlx;
 	game->player = player_factory(map_s->player_x + 0.5,
-			map_s->player_y + 0.5);
+			map_s->player_y + 0.5, dir);
 	game->ray_data = malloc(sizeof(t_ray_data));
 	game->screen = mlx_new_image(mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	mlx_image_to_window(game->mlx, game->screen, 0, 0);

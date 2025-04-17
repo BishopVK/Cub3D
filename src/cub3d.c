@@ -51,6 +51,7 @@ int	main(int argc, char *argv[])
 	print_map(map_s.map);
 	x = 0;
 	y = 0;
+	char dir;
 	while (map_s.map[x])
 	{
 		y = 0;
@@ -61,6 +62,7 @@ int	main(int argc, char *argv[])
 			{
 				map_s.player_x = x;
 				map_s.player_y = y;
+				dir = map_s.map[x][y];
 				break ;
 			}
 			y++;
@@ -70,7 +72,7 @@ int	main(int argc, char *argv[])
 	printf("Player x: %d, Player y: %d", map_s.player_x, map_s.player_y);
 	if (!(mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "my_game", true)))
 		return (EXIT_FAILURE);
-	game = game_factory(mlx, &map_s);
+	game = game_factory(mlx, &map_s, dir);
 	if (!game)
 		return (EXIT_FAILURE);
 	// hardcode_map(game);
