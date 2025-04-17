@@ -6,7 +6,7 @@
 /*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:14:56 by danjimen          #+#    #+#             */
-/*   Updated: 2025/04/05 00:02:00 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/04/17 23:35:08 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	check_map_chars(t_map *map_s, int i, int j)
 		}
 		i++;
 	}
-	if (count > 1)
+	if (count != 1)
 		exit_map_error(map_s, "Error number of players", -1);
 }
 
