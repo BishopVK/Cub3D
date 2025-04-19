@@ -6,7 +6,7 @@
 /*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:14:56 by danjimen          #+#    #+#             */
-/*   Updated: 2025/04/17 23:35:08 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/04/19 23:30:53 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	detect_first_corner(t_map *map_s)
 	int	j;
 
 	j = 0;
+	if (map_s->map[0] == NULL)
+		exit_map_error(map_s, "Error: Map not found", -1);
 	while (map_s->map[0][j])
 	{
 		if (map_s->map[0][j] == '1')
