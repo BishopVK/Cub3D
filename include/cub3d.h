@@ -6,7 +6,7 @@
 /*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:33:23 by danjimen          #+#    #+#             */
-/*   Updated: 2025/04/17 22:48:48 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/04/20 00:23:13 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,8 @@ void	check_elements(t_map *map_s);
 //////////////////////////////////////////////////////
 void	check_map_size(t_map *map_s);
 void	check_map_chars(t_map *map_s, int i, int j);
-void	save_map(char *map, t_map *m_a, int i);
+void	save_map(char *map_file, t_map *map_s, int i, int fd);
+//void	save_map(char *map, t_map *m_a, int i);
 
 // ╔═.✵.═════════════════════════════════════════════╗
 // 					FLOOD_FILL FOLDER

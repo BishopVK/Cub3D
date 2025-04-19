@@ -6,7 +6,7 @@
 /*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:14:56 by danjimen          #+#    #+#             */
-/*   Updated: 2025/04/19 23:30:53 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/04/20 00:24:21 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 void	check_map_size(t_map *map_s)
 {
-	if (map_s->map_max_width > 256)
-		exit_map_error(map_s, "Map wider than 256 not allowed", -1);
-	else if (map_s->map_max_width < 3)
-		exit_map_error(map_s, "The map size is wrong", -1);
-	if (map_s->map_height > 256)
-		exit_map_error(map_s, "Map higher than 256 not allowed", -1);
-	else if (map_s->map_height < 3)
-		exit_map_error(map_s, "The map size is wrong", -1);
+	printf("Map Width: %li\n", map_s->map_max_width); // DB
+	printf("Map Height: %i\n", map_s->map_height); // DB
+	if (map_s->map_max_width < 4)
+		exit_map_error(map_s, "The map is too small to be played", -1);
+	/* else if (map_s->map_max_width > 256)
+		exit_map_error(map_s, "Map wider than 256 not allowed", -1); */
+	if (map_s->map_height < 3)
+			exit_map_error(map_s, "The map is too small to be played", -1);
+	/* else if (map_s->map_height > 256)
+		exit_map_error(map_s, "Map taller than 256 not allowed", -1); */
 }
 
 static void	chars_and_borders(t_map *map_s, char charac, int i)
@@ -100,10 +102,8 @@ void	check_map_chars(t_map *map_s, int i, int j)
 		exit_map_error(map_s, "Error number of players", -1);
 }
 
-void	save_map(char *map_file, t_map *map_s, int i)
+void	save_map(char *map_file, t_map *map_s, int i, int fd)
 {
-	int	fd;
-
 	fd = open(map_file, O_RDONLY);
 	if (fd == -1)
 		exit_map_error(map_s, "Open error", fd);
@@ -115,14 +115,19 @@ void	save_map(char *map_file, t_map *map_s, int i)
 		if (map_s->chars->buffer[0] != '\n'
 			&& ft_strlen(map_s->chars->buffer_trimed) > 0
 			&& map_s->chars->buffer_trimed[0] == '1')
-		{
+		{ // DB
 			printf("Se va a guardar en map_s->map[%i]: %s", i, map_s->chars->buffer); // DB
 			map_s->map[i++] = ft_strdup(map_s->chars->buffer);
-		}
+		} // DB
 		free(map_s->chars->buffer);
 		map_s->chars->buffer = NULL;
 		free(map_s->chars->buffer_trimed);
 		map_s->chars->buffer_trimed = NULL;
+		if (i > 0 && (ft_strlen(map_s->map[i - 1]) >= 256 || i >= 256))
+		{
+			map_s->map[i] = NULL;
+			exit_map_error(map_s, "Map wider or taller than 256", fd);
+		}
 		map_s->chars->buffer = get_next_line(fd, false);
 	}
 	printf("\n"); // DB
