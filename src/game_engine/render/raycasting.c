@@ -1,7 +1,4 @@
 #include "../../../include/cub3d.h"
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 t_bool	calculate_ray_direction_state(t_game *game)
 {

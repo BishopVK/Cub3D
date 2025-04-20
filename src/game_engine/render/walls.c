@@ -1,4 +1,21 @@
 #include "../../../include/cub3d.h"
+#include <stdint.h>
+
+uint32_t get_texture_pixel_color(mlx_image_t *img, int x, int y)
+{
+	uint8_t	*pixel;
+		uint8_t	alpha;
+		uint8_t	red;
+		uint8_t	green;
+		uint8_t	blue;
+
+		pixel = &img->pixels[((y * img->width) + x) * 4];
+		red = pixel[0];
+		green = pixel[1];
+		blue = pixel[2];
+		alpha = pixel[3];
+		return (red << 24 | green << 16 | blue << 8 | alpha);
+}
 
 uint32_t	from_rgb(int r, int g, int b)
 {
@@ -13,6 +30,7 @@ t_bool	render_walls_floor_ceiling_state(t_game *game)
 	int			draw_start;
 	int			draw_end;
 	uint32_t	color;
+	int tex_y;
 
 	rd = game->ray_data;
 	draw_start = rd->draw_start;
@@ -31,20 +49,20 @@ t_bool	render_walls_floor_ceiling_state(t_game *game)
 	for (int y = draw_start; y <= draw_end && y < SCREEN_HEIGHT; y++)
 	{
 		if (rd->side == 0)
-		{                                    // X-axis wall hit (east/west)
-			if (rd->step_x > 0)              // East-facing wall (to the right)
-				color = from_rgb(255, 0, 0); // Red
-			else                             // West-facing wall (to the left)
-				color = from_rgb(0, 255, 0); // Green
+		{
+			if (rd->step_x > 0)
+				color = from_rgb(255, 0, 0);
+			else
+				color = from_rgb(0, 255, 0);
 		}
 		else
-		{ // Y-axis wall hit (north/south)
+		{
 			if (rd->step_y > 0)
-				// South-facing wall (behind at start)
-				color = from_rgb(0, 0, 255); // Blue
+				color = from_rgb(0, 0, 255);
 			else
-				// North-facing wall (in front at start)
-				color = from_rgb(255, 255, 0); // Yellow
+				color = from_rgb(255, 255, 0);
+				// Uint32 color = texture[texNum][texHeight * texY + texX];
+				// color = get_texture_pixel_color(game->wall_east_img, rd->tex_num, (TEXTURE_HEIGHT * tex_y + rd->tex_x));
 		}
 		game->buffer[y][game->x] = color;
 	}

@@ -13,6 +13,7 @@
 #include "../include/cub3d.h"
 #include <stddef.h>
 #include <stdio.h>
+#include <string.h>
 
 static void	initialize_structs(t_map *map_s, t_map_chars *map_chars,
 		t_rgb *floor_rgb, t_rgb *ceiling_rgb)
@@ -75,6 +76,15 @@ int	main(int argc, char *argv[])
 	game = game_factory(mlx, &map_s, dir);
 	if (!game)
 		return (EXIT_FAILURE);
+
+	game->wall_east = mlx_load_png("./textures/png/east.png");
+	if (game->wall_east == NULL)
+	{
+		ft_dprintf(2, "Error\n> Failed to load texture\n");
+		return (EXIT_FAILURE);
+	}
+	game->wall_east_img = mlx_texture_to_image(mlx, game->wall_east);
+
 	// hardcode_map(game);
 	mlx_loop_hook(mlx, ft_game_hook, game);
 	mlx_loop(mlx);

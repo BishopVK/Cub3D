@@ -201,6 +201,8 @@ typedef struct s_game
 	t_ray_data		*ray_data;
 
 	uint32_t		buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
+	mlx_texture_t	*wall_east;
+	mlx_image_t		*wall_east_img;
 
 	t_map			*map_s;
 
