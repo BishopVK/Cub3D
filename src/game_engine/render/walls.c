@@ -1,20 +1,22 @@
 #include "../../../include/cub3d.h"
 #include <stdint.h>
 
-uint32_t get_texture_pixel_color(mlx_image_t *img, int x, int y)
+uint32_t	get_texture_pixel_color(mlx_image_t *img, int x, int y)
 {
-	uint8_t	*pixel;
-		uint8_t	alpha;
-		uint8_t	red;
-		uint8_t	green;
-		uint8_t	blue;
+	uint32_t	offset;
+	uint8_t		red;
+	uint8_t		green;
+	uint8_t		blue;
+	uint8_t		alpha;
 
-		pixel = &img->pixels[((y * img->width) + x) * 4];
-		red = pixel[0];
-		green = pixel[1];
-		blue = pixel[2];
-		alpha = pixel[3];
-		return (red << 24 | green << 16 | blue << 8 | alpha);
+	// Calculate offset in the pixel array (RGBA format)
+	offset = (y * img->width + x) * 4;
+	// Extract color components - MLX textures use RGBA format
+	red = img->pixels[offset];
+	green = img->pixels[offset + 1];
+	blue = img->pixels[offset + 2];
+	alpha = img->pixels[offset + 3];
+	return (red << 24 | green << 16 | blue << 8 | alpha);
 }
 
 uint32_t	from_rgb(int r, int g, int b)
@@ -30,7 +32,6 @@ t_bool	render_walls_floor_ceiling_state(t_game *game)
 	int			draw_start;
 	int			draw_end;
 	uint32_t	color;
-	int tex_y;
 
 	rd = game->ray_data;
 	draw_start = rd->draw_start;
@@ -48,10 +49,12 @@ t_bool	render_walls_floor_ceiling_state(t_game *game)
 	// Draw wall - from drawStart to drawEnd
 	for (int y = draw_start; y <= draw_end && y < SCREEN_HEIGHT; y++)
 	{
+		int tex_y = (int)rd->tex_pos & (TEXTURE_HEIGHT - 1);
+        rd->tex_pos += rd->step;
 		if (rd->side == 0)
 		{
 			if (rd->step_x > 0)
-				color = from_rgb(255, 0, 0);
+				color = get_texture_pixel_color(game->wall_east_img, rd->tex_x, tex_y);
 			else
 				color = from_rgb(0, 255, 0);
 		}
@@ -60,9 +63,9 @@ t_bool	render_walls_floor_ceiling_state(t_game *game)
 			if (rd->step_y > 0)
 				color = from_rgb(0, 0, 255);
 			else
-				color = from_rgb(255, 255, 0);
+				// color = from_rgb(255, 255, 0);
 				// Uint32 color = texture[texNum][texHeight * texY + texX];
-				// color = get_texture_pixel_color(game->wall_east_img, rd->tex_num, (TEXTURE_HEIGHT * tex_y + rd->tex_x));
+				color = get_texture_pixel_color(game->wall_east_img, rd->tex_x, tex_y);
 		}
 		game->buffer[y][game->x] = color;
 	}

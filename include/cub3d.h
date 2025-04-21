@@ -266,10 +266,10 @@ void				check_elements(t_map *map_s);
 //////////////////////////////////////////////////////
 //						MAP.C						//
 //////////////////////////////////////////////////////
-void	check_map_size(t_map *map_s);
-void	check_map_chars(t_map *map_s, int i, int j);
-void	save_map(char *map_file, t_map *map_s, int i, int fd);
-//void	save_map(char *map, t_map *m_a, int i);
+void				check_map_size(t_map *map_s);
+void				check_map_chars(t_map *map_s, int i, int j);
+void				save_map(char *map_file, t_map *map_s, int i, int fd);
+// void	save_map(char *map, t_map *m_a, int i);
 
 // ╔═.✵.═════════════════════════════════════════════╗
 // 					FLOOD_FILL FOLDER
@@ -289,6 +289,7 @@ t_bool				check_ray_completion_state(t_game *game);
 t_bool				advance_to_next_ray_state(t_game *game);
 t_bool				render_walls_floor_ceiling_state(t_game *game);
 t_bool				calculate_wall_distance_state(t_game *game);
+t_bool				calculate_line_height_state(t_game *game);
 t_bool				calculate_wall_drawing_bounds_state(t_game *game);
 t_bool				calculate_texture_coordinates_state(t_game *game);
 t_bool				render_frame_state(t_game *game);

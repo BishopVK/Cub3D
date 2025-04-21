@@ -16,7 +16,7 @@ t_bool	calculate_ray_direction_state(t_game *game)
 		rd->delta_dist_x = 1e30;
 	else
 		rd->delta_dist_x = fabs(1 / rd->ray_dir_x);
-		// dont simplyfy using fabs
+	// dont simplyfy using fabs
 	if (rd->ray_dir_y == 0)
 		rd->delta_dist_y = 1e30;
 	else
@@ -70,7 +70,6 @@ t_bool	perform_dda_state(t_game *game)
 			rd->map_y += rd->step_y;
 			rd->side = 1;
 		}
-
 		if (game->map_s->map[rd->map_x][rd->map_y] == '1')
 			rd->hit = 1;
 	}
@@ -87,22 +86,31 @@ t_bool	calculate_wall_distance_state(t_game *game)
 		rd->perp_wall_dist = (rd->side_dist_x - rd->delta_dist_x);
 	else
 		rd->perp_wall_dist = (rd->side_dist_y - rd->delta_dist_y);
+	game->state = calculate_line_height_state;
+	return (TRUE);
+}
+
+// Calculate height of line to draw on screen
+t_bool	calculate_line_height_state(t_game *game)
+{
+	t_ray_data	*rd;
+
+	rd = game->ray_data;
+	rd->line_height = (int)(SCREEN_HEIGHT / rd->perp_wall_dist);
 	game->state = calculate_wall_drawing_bounds_state;
 	return (TRUE);
 }
 
+// calculate lowest and highest pixel to fill in current stripe
 t_bool	calculate_wall_drawing_bounds_state(t_game *game)
 {
 	t_ray_data	*rd;
 
 	rd = game->ray_data;
-	// Calculate height of line to draw on screen
-	rd->line_height = (int)(SCREEN_HEIGHT / rd->perp_wall_dist);
-	// calculate lowest and highest pixel to fill in current stripe
-	rd->draw_start = -rd->line_height / 2 + SCREEN_HEIGHT / 2;
+	rd->draw_start = -rd->line_height / 2 + SCREEN_HEIGHT / 2 + 100;
 	if (rd->draw_start < 0)
 		rd->draw_start = 0;
-	rd->draw_end = rd->line_height / 2 + SCREEN_HEIGHT / 2;
+	rd->draw_end = rd->line_height / 2 + SCREEN_HEIGHT / 2 + 100;
 	if (rd->draw_end >= SCREEN_HEIGHT)
 		rd->draw_end = SCREEN_HEIGHT - 1;
 	game->state = calculate_texture_coordinates_state;
@@ -129,7 +137,7 @@ t_bool	calculate_texture_coordinates_state(t_game *game)
 		rd->tex_x = TEXTURE_WIDTH - rd->tex_x - 1;
 	// Calculate step and initial texture position
 	rd->step = 1.0 * TEXTURE_HEIGHT / rd->line_height;
-	rd->tex_pos = (rd->draw_start - (double)SCREEN_HEIGHT / 2
+	rd->tex_pos = (rd->draw_start - 100 - (double)SCREEN_HEIGHT / 2
 			+ (double)rd->line_height / 2) * rd->step;
 	game->state = render_walls_floor_ceiling_state;
 	return (TRUE);
