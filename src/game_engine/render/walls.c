@@ -45,7 +45,7 @@ t_bool	render_walls_floor_ceiling_state(t_game *game)
 	if (draw_end >= SCREEN_HEIGHT)
 		draw_end = SCREEN_HEIGHT - 1;
 	for (int y = 0; y < draw_start; y++)
-		game->buffer[y][game->x] = from_rgb(51, 255, 255); // Sky blue
+		game->buffer[y][game->x] = from_rgb(game->map_s->ceiling->r, game->map_s->ceiling->g, game->map_s->ceiling->b); // Sky blue
 	// Draw wall - from drawStart to drawEnd
 	for (int y = draw_start; y <= draw_end && y < SCREEN_HEIGHT; y++)
 	{
@@ -71,7 +71,7 @@ t_bool	render_walls_floor_ceiling_state(t_game *game)
 	}
 	// Draw floor - from drawEnd+1 to SCREEN_HEIGHT-1
 	for (int y = draw_end + 1; y < SCREEN_HEIGHT; y++)
-		game->buffer[y][game->x] = from_rgb(112, 83, 25); // Brown
+		game->buffer[y][game->x] = from_rgb(game->map_s->floor->r, game->map_s->floor->g, game->map_s->floor->b); // Brown
 	game->state = advance_to_next_ray_state;
 	return (TRUE);
 }
