@@ -54,14 +54,16 @@ t_bool	render_walls_floor_ceiling_state(t_game *game)
 		if (rd->side == 0)
 		{
 			if (rd->step_x > 0)
-				color = get_texture_pixel_color(game->wall_east_img, rd->tex_x, tex_y);
+				color = get_texture_pixel_color(game->wall_north_img, rd->tex_x, tex_y);
 			else
-				color = from_rgb(0, 255, 0);
+				color = get_texture_pixel_color(game->wall_south_img, rd->tex_x, tex_y);
+				//color = from_rgb(0, 255, 0);
 		}
 		else
 		{
 			if (rd->step_y > 0)
-				color = from_rgb(0, 0, 255);
+				//color = from_rgb(0, 0, 255);
+				color = get_texture_pixel_color(game->wall_west_img, rd->tex_x, tex_y);
 			else
 				// color = from_rgb(255, 255, 0);
 				// Uint32 color = texture[texNum][texHeight * texY + texX];
