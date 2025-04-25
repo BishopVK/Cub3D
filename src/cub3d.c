@@ -6,7 +6,7 @@
 /*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:39:00 by danjimen          #+#    #+#             */
-/*   Updated: 2025/04/05 00:32:38 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/04/25 21:44:43 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,23 @@ int	main(int argc, char *argv[])
 	if (!game)
 		return (EXIT_FAILURE);
 
-	game->wall_east = mlx_load_png("./textures/png/east.png");
-	if (game->wall_east == NULL)
+	/* game->wall_east = mlx_load_png("./textures/png/testing/east.png");
+	game->wall_west = mlx_load_png("./textures/png/testing/west.png");
+	game->wall_south = mlx_load_png("./textures/png/testing/south.png");
+	game->wall_north = mlx_load_png("./textures/png/testing/north.png"); */
+	game->wall_east = mlx_load_png(game->map_s->east[1]);
+	game->wall_west = mlx_load_png(game->map_s->west[1]);
+	game->wall_south = mlx_load_png(game->map_s->south[1]);
+	game->wall_north = mlx_load_png(game->map_s->north[1]);
+	if (!game->wall_east || !game->wall_west || !game->wall_south || !game->wall_north)
 	{
 		ft_dprintf(2, "Error\n> Failed to load texture\n");
 		return (EXIT_FAILURE);
 	}
 	game->wall_east_img = mlx_texture_to_image(mlx, game->wall_east);
+	game->wall_west_img = mlx_texture_to_image(mlx, game->wall_west);
+	game->wall_south_img = mlx_texture_to_image(mlx, game->wall_south);
+	game->wall_north_img = mlx_texture_to_image(mlx, game->wall_north);
 
 	// hardcode_map(game);
 	mlx_loop_hook(mlx, ft_game_hook, game);
