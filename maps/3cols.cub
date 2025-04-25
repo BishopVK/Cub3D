@@ -1,10 +1,10 @@
-NO ./textures/xpm/north.xpm
-SO ./textures/xpm/south.xpm
-WE ./textures/xpm/west.xpm
-EA ./textures/xpm/east.xpm
+NO ./textures/png2/north.png
+SO ./textures/png2/south.png
+WE ./textures/png2/west.png
+EA ./textures/png2/east.png
 
-F 220,100,0
-C 225,30,255
+F 24,20,37
+C 77,45,51
 
 111
 1S1
