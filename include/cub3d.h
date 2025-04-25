@@ -6,7 +6,7 @@
 /*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:33:23 by danjimen          #+#    #+#             */
-/*   Updated: 2025/04/20 00:23:13 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/04/25 21:16:44 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,12 @@ typedef struct s_game
 	uint32_t		buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
 	mlx_texture_t	*wall_east;
 	mlx_image_t		*wall_east_img;
+	mlx_texture_t	*wall_west;
+	mlx_image_t		*wall_west_img;
+	mlx_texture_t	*wall_south;
+	mlx_image_t		*wall_south_img;
+	mlx_texture_t	*wall_north;
+	mlx_image_t		*wall_north_img;
 
 	t_map			*map_s;
 
