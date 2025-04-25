@@ -90,6 +90,8 @@ void	handle_input(t_game *game)
 	// Calculate movement speed based on frame time
 	move_speed = game->frame_time * 1.5;
 	rotation_speed = game->frame_time * 2.0;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT_SHIFT))
+		move_speed *= 2;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_W))
 		move_forward(game, move_speed);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_S))
