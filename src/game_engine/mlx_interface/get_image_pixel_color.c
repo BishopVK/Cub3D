@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game_states.c                                      :+:      :+:    :+:   */
+/*   get_image_pixel_color.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,34 +12,23 @@
 
 #include "../../../include/cub3d.h"
 
-t_bool	check_ray_completion_state(t_game *game)
+uint32_t	from_rgb(int r, int g, int b, int alpha)
 {
-	if (game->x >= SCREEN_WIDTH)
-	{
-		game->state = render_frame_state;
-		return (TRUE);
-	}
-	game->state = calculate_ray_direction_state;
-	return (TRUE);
+	return ((r << 24) | (g << 16) | (b << 8) | alpha);
 }
 
-t_bool	advance_to_next_ray_state(t_game *game)
+uint32_t	get_image_pixel_color(mlx_image_t *img, int x, int y)
 {
-	game->x++;
-	game->state = check_ray_completion_state;
-	return (TRUE);
-}
+	uint32_t	offset;
+	uint8_t		red;
+	uint8_t		green;
+	uint8_t		blue;
+	uint8_t		alpha;
 
-void	ft_game_hook(void *param)
-{
-	t_game	*game;
-
-	game = (t_game *)param;
-	game->x = 0;
-	game->is_done = FALSE;
-	game->state = check_ray_completion_state;
-	while (!game->is_done)
-		game->state(game);
-	handle_input(game);
-	// handle_mouse(game);
+	offset = (y * img->width + x) * 4;
+	red = img->pixels[offset];
+	green = img->pixels[offset + 1];
+	blue = img->pixels[offset + 2];
+	alpha = img->pixels[offset + 3];
+	return (from_rgb(red, green, blue, alpha));
 }

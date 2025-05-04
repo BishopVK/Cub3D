@@ -46,9 +46,15 @@ SRC				=	$(SRC_DIR)/cub3d.c \
 					./src/game_engine/input/keyboard.c \
 					./src/game_engine/input/mouse.c \
 					./src/game_engine/render/frame.c \
-					./src/game_engine/render/raycasting.c \
+					./src/game_engine/render/raycasting/calculate_ray_direction_state.c \
+					./src/game_engine/render/raycasting/perform_dda_state.c \
+					./src/game_engine/render/raycasting/calculate_wall_distance_state.c \
+					./src/game_engine/render/raycasting/calculate_line_height_state.c \
+					./src/game_engine/render/raycasting/calculate_wall_drawing_bounds_state.c \
+					./src/game_engine/render/raycasting/calculate_texture_coordinates_state.c \
 					./src/game_engine/render/walls.c \
 					./src/game_engine/render/game_states.c \
+					./src/game_engine/mlx_interface/get_image_pixel_color.c \
 
 OBJ				=	$(SRC:.c=.o)
 

@@ -1,39 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   walls.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/04 18:01:21 by serferna          #+#    #+#             */
+/*   Updated: 2025/05/04 18:01:21 by serferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../include/cub3d.h"
-#include <stdint.h>
 
-uint32_t	get_texture_pixel_color(mlx_image_t *img, int x, int y)
+static void	check_bounds(t_ray_data *rd)
 {
-	uint32_t	offset;
-	uint8_t		red;
-	uint8_t		green;
-	uint8_t		blue;
-	uint8_t		alpha;
+	int	draw_start;
+	int	draw_end;
 
-	// Calculate offset in the pixel array (RGBA format)
-	offset = (y * img->width + x) * 4;
-	// Extract color components - MLX textures use RGBA format
-	red = img->pixels[offset];
-	green = img->pixels[offset + 1];
-	blue = img->pixels[offset + 2];
-	alpha = img->pixels[offset + 3];
-	return (red << 24 | green << 16 | blue << 8 | alpha);
-}
-
-uint32_t	from_rgb(int r, int g, int b)
-{
-	const int	alpha = 255;
-
-	return ((r << 24) | (g << 16) | (b << 8) | alpha);
-}
-
-t_bool	render_walls_floor_ceiling_state(t_game *game)
-{
-	t_ray_data	*rd;
-	int			draw_start;
-	int			draw_end;
-	uint32_t	color;
-
-	rd = game->ray_data;
 	draw_start = rd->draw_start;
 	draw_end = rd->draw_end;
 	if (draw_start < 0)
@@ -44,36 +27,82 @@ t_bool	render_walls_floor_ceiling_state(t_game *game)
 		draw_end = 0;
 	if (draw_end >= SCREEN_HEIGHT)
 		draw_end = SCREEN_HEIGHT - 1;
-	for (int y = 0; y < draw_start; y++)
-		game->buffer[y][game->x] = from_rgb(game->map_s->ceiling->r, game->map_s->ceiling->g, game->map_s->ceiling->b); // Sky blue
-	// Draw wall - from drawStart to drawEnd
-	for (int y = draw_start; y <= draw_end && y < SCREEN_HEIGHT; y++)
+}
+
+static void	set_sky_earth_colors(t_game *game)
+{
+	int	draw_start;
+	int	draw_end;
+	int	y;
+
+	draw_start = game->ray_data->draw_start;
+	draw_end = game->ray_data->draw_end;
+	y = 0;
+	while (y < draw_start)
 	{
-		int tex_y = (int)rd->tex_pos & (TEXTURE_HEIGHT - 1);
-        rd->tex_pos += rd->step;
-		if (rd->side == 0)
-		{
-			if (rd->step_x > 0)
-				color = get_texture_pixel_color(game->wall_north_img, rd->tex_x, tex_y);
-			else
-				color = get_texture_pixel_color(game->wall_south_img, rd->tex_x, tex_y);
-				//color = from_rgb(0, 255, 0);
-		}
-		else
-		{
-			if (rd->step_y > 0)
-				//color = from_rgb(0, 0, 255);
-				color = get_texture_pixel_color(game->wall_west_img, rd->tex_x, tex_y);
-			else
-				// color = from_rgb(255, 255, 0);
-				// Uint32 color = texture[texNum][texHeight * texY + texX];
-				color = get_texture_pixel_color(game->wall_east_img, rd->tex_x, tex_y);
-		}
-		game->buffer[y][game->x] = color;
+		game->buffer[y][game->x] = from_rgb(game->map_s->ceiling->r,
+				game->map_s->ceiling->g, game->map_s->ceiling->b, 255);
+		y++;
 	}
-	// Draw floor - from drawEnd+1 to SCREEN_HEIGHT-1
-	for (int y = draw_end + 1; y < SCREEN_HEIGHT; y++)
-		game->buffer[y][game->x] = from_rgb(game->map_s->floor->r, game->map_s->floor->g, game->map_s->floor->b); // Brown
+	y = draw_end + 1;
+	while (y < SCREEN_HEIGHT)
+	{
+		game->buffer[y][game->x] = from_rgb(game->map_s->floor->r,
+				game->map_s->floor->g, game->map_s->floor->b, 255);
+		y++;
+	}
+}
+
+void	set_wall_line_texture(t_game *game)
+{
+	t_ray_data	*rd;
+
+	rd = game->ray_data;
+	if (rd->side == 0 && rd->step_x > 0)
+		rd->tex_num = 0;
+	else if (rd->side == 0 && rd->step_x < 0)
+		rd->tex_num = 1;
+	else if (rd->side == 1 && rd->step_y > 0)
+		rd->tex_num = 2;
+	else
+		rd->tex_num = 3;
+}
+
+void	set_texture_color(t_game *game)
+{
+	int			y;
+	uint32_t	color;
+	int			tex_y;
+	t_ray_data	*rd;
+
+	rd = game->ray_data;
+	y = game->ray_data->draw_start;
+	set_wall_line_texture(game);
+	while (y < game->ray_data->draw_end)
+	{
+		tex_y = (int)game->ray_data->tex_pos & (TEXTURE_HEIGHT - 1);
+		game->ray_data->tex_pos += game->ray_data->step;
+		if (game->ray_data->tex_num == 0)
+			color = get_image_pixel_color(game->so_img, rd->tex_x, tex_y);
+		else if (game->ray_data->tex_num == 1)
+			color = get_image_pixel_color(game->no_img, rd->tex_x, tex_y);
+		else if (game->ray_data->tex_num == 2)
+			color = get_image_pixel_color(game->ea_img, rd->tex_x, tex_y);
+		else
+			color = get_image_pixel_color(game->we_img, rd->tex_x, tex_y);
+		game->buffer[y][game->x] = color;
+		y++;
+	}
+}
+
+t_bool	render_walls_floor_ceiling_state(t_game *game)
+{
+	t_ray_data	*rd;
+
+	rd = game->ray_data;
+	check_bounds(rd);
+	set_sky_earth_colors(game);
+	set_texture_color(game);
 	game->state = advance_to_next_ray_state;
 	return (TRUE);
 }

@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-#include <stddef.h>
-#include <stdio.h>
-#include <string.h>
 
 static void	initialize_structs(t_map *map_s, t_map_chars *map_chars,
 		t_rgb *floor_rgb, t_rgb *ceiling_rgb)
@@ -90,10 +87,10 @@ int	main(int argc, char *argv[])
 		ft_dprintf(2, "Error\n> Failed to load texture\n");
 		return (EXIT_FAILURE);
 	}
-	game->wall_east_img = mlx_texture_to_image(mlx, game->wall_east);
-	game->wall_west_img = mlx_texture_to_image(mlx, game->wall_west);
-	game->wall_south_img = mlx_texture_to_image(mlx, game->wall_south);
-	game->wall_north_img = mlx_texture_to_image(mlx, game->wall_north);
+	game->ea_img = mlx_texture_to_image(mlx, game->wall_east);
+	game->we_img = mlx_texture_to_image(mlx, game->wall_west);
+	game->so_img = mlx_texture_to_image(mlx, game->wall_south);
+	game->no_img = mlx_texture_to_image(mlx, game->wall_north);
 
 	// hardcode_map(game);
 	mlx_loop_hook(mlx, ft_game_hook, game);

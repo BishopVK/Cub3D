@@ -202,13 +202,13 @@ typedef struct s_game
 
 	uint32_t		buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
 	mlx_texture_t	*wall_east;
-	mlx_image_t		*wall_east_img;
+	mlx_image_t		*ea_img;
 	mlx_texture_t	*wall_west;
-	mlx_image_t		*wall_west_img;
+	mlx_image_t		*we_img;
 	mlx_texture_t	*wall_south;
-	mlx_image_t		*wall_south_img;
+	mlx_image_t		*so_img;
 	mlx_texture_t	*wall_north;
-	mlx_image_t		*wall_north_img;
+	mlx_image_t		*no_img;
 
 	t_map			*map_s;
 
@@ -286,8 +286,22 @@ void				save_map(char *map_file, t_map *map_s, int i, int fd);
 //////////////////////////////////////////////////////
 void				init_flood_fill(t_map *map_s);
 
+// ╔═.✵.═════════════════════════════════════════════╗
+//  					GAME ENGINE
+// ╚═════════════════════════════════════════════.✵.═╝
+
 //////////////////////////////////////////////////////////
-//					GAME ENGINE FOLDER                  //
+//					MLX INTERFACE						//
+//////////////////////////////////////////////////////////
+uint32_t			get_image_pixel_color(mlx_image_t *img, int x, int y);
+uint32_t			from_rgb(int r, int g, int b, int a);
+
+//////////////////////////////////////////////////////////
+//					RAYCASTER							//
+//////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////
+//					RENDERING							//
 //////////////////////////////////////////////////////////
 t_bool				calculate_ray_direction_state(t_game *game);
 t_bool				perform_dda_state(t_game *game);

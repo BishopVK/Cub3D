@@ -17,7 +17,6 @@ t_bool	update_frame_data_state(t_game *game)
 	game->old_time = game->time;
 	game->time = mlx_get_time();
 	game->frame_time = (game->time - game->old_time);
-	// printf("FPS: %f\n", 1.0 / game->frameTime);
 	game->is_done = TRUE;
 	return (TRUE);
 }
