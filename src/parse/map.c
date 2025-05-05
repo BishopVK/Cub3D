@@ -6,7 +6,7 @@
 /*   By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:14:56 by danjimen          #+#    #+#             */
-/*   Updated: 2025/05/05 12:41:06 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/05/05 12:50:52 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	chars_and_borders(t_map *map_s, char charac, int i)
 	free (trimed);
 }
 
-void	detect_first_corner(t_map *map_s)
+/* void	detect_first_corner(t_map *map_s)
 {
 	int	j;
 
@@ -69,6 +69,18 @@ void	detect_first_corner(t_map *map_s)
 		}
 		j++;
 	}
+} */
+
+static void	player_coords_and_dir(t_map *map_s, int *i, int *j, int *count)
+{
+	if (map_s->map[*i][*j] == 'N' || map_s->map[*i][*j] == 'S'
+		|| map_s->map[*i][*j] == 'W' || map_s->map[*i][*j] == 'E')
+	{
+		map_s->player_x = *i;
+		map_s->player_y = *j;
+		map_s->player_dir = map_s->map[*i][*j];
+		(*count)++;
+	}
 }
 
 void	check_map_chars(t_map *map_s, int i, int j)
@@ -76,20 +88,21 @@ void	check_map_chars(t_map *map_s, int i, int j)
 	int	count;
 
 	count = 0;
-	detect_first_corner(map_s);
+	//detect_first_corner(map_s);
 	while (map_s->map[i])
 	{
 		j = 0;
 		while (map_s->map[i][j])
 		{
-			if (map_s->map[i][j] == 'N' || map_s->map[i][j] == 'S'
+			player_coords_and_dir(map_s, &i, &j, &count);
+			/* if (map_s->map[i][j] == 'N' || map_s->map[i][j] == 'S'
 				|| map_s->map[i][j] == 'W' || map_s->map[i][j] == 'E')
 			{
 				map_s->player_x = i;
 				map_s->player_y = j;
 				map_s->player_dir = map_s->map[i][j];
 				count++;
-			}
+			} */
 			if (map_s->map[i][j] != 'N' && map_s->map[i][j] != 'S'
 					&& map_s->map[i][j] != 'W' && map_s->map[i][j] != 'E'
 					&& map_s->map[i][j] != '1' && map_s->map[i][j] != '0'
