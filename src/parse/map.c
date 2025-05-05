@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:14:56 by danjimen          #+#    #+#             */
-/*   Updated: 2025/04/20 00:24:21 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/05/05 12:41:06 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,12 @@ void	check_map_chars(t_map *map_s, int i, int j)
 		{
 			if (map_s->map[i][j] == 'N' || map_s->map[i][j] == 'S'
 				|| map_s->map[i][j] == 'W' || map_s->map[i][j] == 'E')
+			{
+				map_s->player_x = i;
+				map_s->player_y = j;
+				map_s->player_dir = map_s->map[i][j];
 				count++;
+			}
 			if (map_s->map[i][j] != 'N' && map_s->map[i][j] != 'S'
 					&& map_s->map[i][j] != 'W' && map_s->map[i][j] != 'E'
 					&& map_s->map[i][j] != '1' && map_s->map[i][j] != '0'
@@ -98,6 +103,7 @@ void	check_map_chars(t_map *map_s, int i, int j)
 		}
 		i++;
 	}
+	printf("Player cords: ( %i , %i )\n", map_s->player_x, map_s->player_y); // DB
 	if (count != 1)
 		exit_map_error(map_s, "Error number of players", -1);
 }

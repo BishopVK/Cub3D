@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:39:00 by danjimen          #+#    #+#             */
-/*   Updated: 2025/04/25 21:44:43 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/05/05 12:15:51 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	main(int argc, char *argv[])
 	t_map_chars	map_chars;
 	t_rgb		floor_rgb;
 	t_rgb		ceiling_rgb;
-	uint64_t	x;
-	uint64_t	y;
+	/* uint64_t	x;
+	uint64_t	y; */
 	mlx_t		*mlx;
 	t_game		*game;
 
@@ -47,7 +47,8 @@ int	main(int argc, char *argv[])
 
 	printf("FinalMap\n");
 	print_map(map_s.map);
-	x = 0;
+	// PLAYER COORDS:
+	/* x = 0;
 	y = 0;
 	char dir;
 	while (map_s.map[x])
@@ -67,17 +68,14 @@ int	main(int argc, char *argv[])
 		}
 		x++;
 	}
-	printf("Player x: %d, Player y: %d", map_s.player_x, map_s.player_y);
+	printf("Player x: %d, Player y: %d", map_s.player_x, map_s.player_y); // DB */
+
 	if (!(mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "my_game", true)))
 		return (EXIT_FAILURE);
-	game = game_factory(mlx, &map_s, dir);
+	game = game_factory(mlx, &map_s);
 	if (!game)
 		return (EXIT_FAILURE);
 
-	/* game->wall_east = mlx_load_png("./textures/png/testing/east.png");
-	game->wall_west = mlx_load_png("./textures/png/testing/west.png");
-	game->wall_south = mlx_load_png("./textures/png/testing/south.png");
-	game->wall_north = mlx_load_png("./textures/png/testing/north.png"); */
 	game->wall_east = mlx_load_png(game->map_s->east[1]);
 	game->wall_west = mlx_load_png(game->map_s->west[1]);
 	game->wall_south = mlx_load_png(game->map_s->south[1]);

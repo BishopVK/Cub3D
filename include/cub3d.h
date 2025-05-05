@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:33:23 by danjimen          #+#    #+#             */
-/*   Updated: 2025/04/25 21:16:44 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/05/05 12:38:40 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,7 +315,8 @@ t_bool				calculate_texture_coordinates_state(t_game *game);
 t_bool				render_frame_state(t_game *game);
 t_bool				update_frame_data_state(t_game *game);
 t_player			*player_factory(double x, double y, char dir);
-t_game				*game_factory(mlx_t *mlx, t_map *map, char dir);
+//t_game				*game_factory(mlx_t *mlx, t_map *map, char dir);
+t_game				*game_factory(mlx_t *mlx, t_map *map_s);
 void				handle_input(t_game *game);
 void				ft_game_hook(void *param);
 
