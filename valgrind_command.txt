@@ -1,0 +1,1 @@
+valgrind --tool=memcheck --leak-check=full --log-file=valgrind_output.txt ./cub3D maps/map.cub 
