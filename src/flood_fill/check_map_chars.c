@@ -6,13 +6,14 @@
 /*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 00:00:33 by danjimen          #+#    #+#             */
-/*   Updated: 2025/05/07 00:26:31 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/05/07 00:36:28 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-static void	manage_errors(int count_chars, int count_2, char **copy, t_map *map_s)
+static void	manage_errors(int count_chars, int count_2,
+	char **copy, t_map *map_s)
 {
 	if (count_2 != 0)
 	{

@@ -6,60 +6,18 @@
 /*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 00:00:33 by danjimen          #+#    #+#             */
-/*   Updated: 2025/05/07 00:24:15 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/05/07 00:37:09 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-static void	manage_errors(int count_chars, int count_2, char **copy, t_map *map_s)
-{
-	if (count_2 != 0)
-	{
-		free_double_pointer(copy);
-		exit_map_error(map_s, "Maps whith holes not allowed", -1);
-		exit (EXIT_FAILURE);
-	}
-	if (count_chars != map_s->total_map_chars)
-	{
-		free_double_pointer(copy);
-		exit_map_error(map_s, "Unclosed map not allowed", -1);
-		exit (EXIT_FAILURE);
-	}
-}
-
-void	count_chars(t_map *map_s, char **copy)
-{
-	int	i;
-	int	j;
-	int	count_chars;
-	int	count_2;
-
-	i = 0;
-	count_chars = 0;
-	count_2 = 0;
-	while (copy[i])
-	{
-		j = 0;
-		while (copy[i][j])
-		{
-			if (copy[i][j] == '1' || copy[i][j] == '0' || copy[i][j] == 'N'
-				|| copy[i][j] == 'S' || copy[i][j] == 'W' || copy[i][j] == 'E')
-				count_chars++;
-			if (copy[i][j] == '2')
-				count_2++;
-			j++;
-		}
-		i++;
-	}
-	manage_errors(count_chars, count_2, copy, map_s);
-}
-
 void	flood_fill_open(t_map *map_s, char **copy, int x, int y)
 {
 	if (x < 0 || x > map_s->map_height + 1
 		|| y < 0 || (size_t)y >= map_s->map_max_width + 2
-		|| copy[x][y] == '1' || copy[x][y] == '\n' || copy[x][y] == 'X' || copy[x][y] == ' ')
+		|| copy[x][y] == '1' || copy[x][y] == '\n'
+		|| copy[x][y] == 'X' || copy[x][y] == ' ')
 		return ;
 	copy[x][y] = 'X';
 	flood_fill_open(map_s, copy, x + 1, y);
@@ -106,7 +64,7 @@ char	**dupe_and_upscale_array(t_map *map_s, char c)
 		j = 0;
 		copy[i + 1][0] = c;
 		ft_memset(copy[i + 1], c, map_s->map_max_width + 1);
-		while(map_s->map[i][j])
+		while (map_s->map[i][j])
 		{
 			if (map_s->map[i][j] != '\n' && map_s->map[i][j] != ' ')
 				copy[i + 1][j + 1] = map_s->map[i][j];
