@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:39:00 by danjimen          #+#    #+#             */
-/*   Updated: 2025/05/06 09:09:52 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/05/06 22:47:57 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	initialize_structs(t_map *map_s, t_map_chars *map_chars,
 	ft_memset(map_chars, 0, sizeof(t_map_chars));
 	ft_memset(floor_rgb, 0, sizeof(t_rgb));
 	ft_memset(ceiling_rgb, 0, sizeof(t_rgb));
-	map_s->chars = map_chars; // Apuntar a la memoria de map_chars
+	map_s->chars = map_chars; // DB Apuntar a la memoria de map_chars
 	map_s->floor = floor_rgb;
 	map_s->ceiling = ceiling_rgb;
 }
@@ -67,8 +67,9 @@ int	main(int argc, char *argv[])
 	t_rgb		floor_rgb;
 	t_rgb		ceiling_rgb;
 	mlx_t		*mlx;
-	t_game		*game;
+	t_game		*game; // DB "Error: Too many variables declarations in a function"
 
+	mlx = NULL; // DB Avoid "error: ‘mlx’ may be used uninitialized"
 	initialize_structs(&map_s, &map_chars, &floor_rgb, &ceiling_rgb);
 	if (argc != 2)
 	{
