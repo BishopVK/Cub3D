@@ -6,7 +6,7 @@
 /*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:07:07 by danjimen          #+#    #+#             */
-/*   Updated: 2025/04/20 01:21:46 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/05/07 00:40:36 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,9 @@
 static void	keep_map_elements(char ***element, t_map *map_s, int fd)
 {
 	if (*element == NULL)
-	{
-		printf ("%s IS VOID\n", map_s->chars->buffer_trimed); // DB
 		*element = ft_split_isspace(map_s->chars->buffer_trimed);
-	}
 	else
-	{
-		print_element(*element); // DB
 		exit_map_error(map_s, "Repeated map element", fd);
-	}
 }
 
 void	detect_map_elements(t_map *map_s, int fd)
@@ -46,10 +40,7 @@ void	detect_map_elements(t_map *map_s, int fd)
 		else if (trimed[0] == 'C' && ft_isspace(trimed[1]))
 			keep_map_elements(&map_s->ceiling->element, map_s, fd);
 		else
-		{
-			printf("%s", map_s->chars->buffer); // DB
 			exit_map_error(map_s, "Not a valid element detected", fd);
-		}
 	}
 	else
 		exit_map_error(map_s, "Not a valid element detected", fd);
