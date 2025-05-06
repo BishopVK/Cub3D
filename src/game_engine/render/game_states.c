@@ -33,8 +33,15 @@ t_bool	advance_to_next_ray_state(t_game *game)
 void	ft_game_hook(void *param)
 {
 	t_game	*game;
+	
 
 	game = (t_game *)param;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
+	{
+		game->is_done = TRUE;
+		mlx_close_window(game->mlx);
+		return ;
+	}
 	game->x = 0;
 	game->is_done = FALSE;
 	game->state = check_ray_completion_state;

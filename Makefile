@@ -55,6 +55,8 @@ SRC				=	$(SRC_DIR)/cub3d.c \
 					./src/game_engine/render/walls.c \
 					./src/game_engine/render/game_states.c \
 					./src/game_engine/mlx_interface/get_image_pixel_color.c \
+					./src/game_engine/player/movement.c \
+					./src/game_engine/player/rotation.c \
 
 OBJ				=	$(SRC:.c=.o)
 

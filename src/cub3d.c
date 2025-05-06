@@ -30,7 +30,8 @@ int	init_game_textures(t_game *game, mlx_t *mlx)
 	game->wall_west = mlx_load_png(game->map_s->west[1]);
 	game->wall_south = mlx_load_png(game->map_s->south[1]);
 	game->wall_north = mlx_load_png(game->map_s->north[1]);
-	if (!game->wall_east || !game->wall_west || !game->wall_south || !game->wall_north)
+	if (!game->wall_east || !game->wall_west || !game->wall_south
+		|| !game->wall_north)
 	{
 		ft_dprintf(2, "Error\n> Failed to load texture\n");
 		return (EXIT_FAILURE);
@@ -40,6 +41,23 @@ int	init_game_textures(t_game *game, mlx_t *mlx)
 	game->so_img = mlx_texture_to_image(mlx, game->wall_south);
 	game->no_img = mlx_texture_to_image(mlx, game->wall_north);
 	return (0);
+}
+
+static void	destroy_game(t_game *game)
+{
+	mlx_delete_image(game->mlx, game->screen);
+	mlx_delete_image(game->mlx, game->ea_img);
+	mlx_delete_image(game->mlx, game->we_img);
+	mlx_delete_image(game->mlx, game->so_img);
+	mlx_delete_image(game->mlx, game->no_img);
+	mlx_delete_texture(game->wall_east);
+	mlx_delete_texture(game->wall_west);
+	mlx_delete_texture(game->wall_south);
+	mlx_delete_texture(game->wall_north);
+	free(game->ray_data);
+	free(game->player);
+	free(game);
+	mlx_terminate(game->mlx);
 }
 
 int	main(int argc, char *argv[])
@@ -60,25 +78,16 @@ int	main(int argc, char *argv[])
 	check_arg_extension(argv[1]);
 	read_map(argv[1], &map_s);
 	init_flood_fill(&map_s);
-
 	printf("FinalMap\n");
 	print_map(map_s.map);
-
-	mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "😈 serferna & danjimen's f**king Cub3D 😈", true);
-	if (!mlx)
-		return (EXIT_FAILURE);
-	game = game_factory(mlx, &map_s);
+	game = game_factory(&map_s);
 	if (!game)
 		return (EXIT_FAILURE);
 	if (init_game_textures(game, mlx) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	mlx_loop_hook(mlx, ft_game_hook, game);
 	mlx_loop(mlx);
-	mlx_delete_image(mlx, game->screen);
-	free(game->ray_data);
-	free(game->player);
-	free(game);
-	mlx_terminate(mlx);
+	destroy_game(game);
 	free_elements(&map_s);
 	free_double_pointer(map_s.map);
 	return (EXIT_SUCCESS);

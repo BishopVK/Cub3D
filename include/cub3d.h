@@ -315,9 +315,19 @@ t_bool				calculate_texture_coordinates_state(t_game *game);
 t_bool				render_frame_state(t_game *game);
 t_bool				update_frame_data_state(t_game *game);
 t_player			*player_factory(double x, double y, char dir);
-//t_game				*game_factory(mlx_t *mlx, t_map *map, char dir);
-t_game				*game_factory(mlx_t *mlx, t_map *map_s);
+t_game				*game_factory(t_map *map_s);
 void				handle_input(t_game *game);
 void				ft_game_hook(void *param);
+
+// ╔═.✵.═════════════════════════════════════════════╗
+// 					PLAYER
+// ╚═════════════════════════════════════════════.✵.═╝
+
+void				move_forward(t_game *game, double move_speed);
+void				move_backward(t_game *game, double move_speed);
+void				move_left(t_game *game, double move_speed);
+void				move_right(t_game *game, double move_speed);
+void				rotate_left(t_game *game, double rotation_speed);
+void				rotate_right(t_game *game, double rotation_speed);
 
 #endif
