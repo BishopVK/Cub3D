@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_states.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:01:21 by serferna          #+#    #+#             */
-/*   Updated: 2025/05/04 18:01:21 by serferna         ###   ########.fr       */
+/*   Updated: 2025/05/07 00:38:26 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_bool	advance_to_next_ray_state(t_game *game)
 void	ft_game_hook(void *param)
 {
 	t_game	*game;
-	
 
 	game = (t_game *)param;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
@@ -48,5 +47,4 @@ void	ft_game_hook(void *param)
 	while (!game->is_done)
 		game->state(game);
 	handle_input(game);
-	// handle_mouse(game);
 }
