@@ -1,0 +1,11 @@
+NO ./textures/png2/north.png
+SO ./textures/png2/south.png
+WE ./textures/png2/west.png
+EA ./textures/png2/east.png
+
+F 24,20,37
+C 77,45,51
+
+1111111111111
+10000000000W1
+1111111111111
