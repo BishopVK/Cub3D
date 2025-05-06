@@ -6,7 +6,7 @@
 /*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:39:00 by danjimen          #+#    #+#             */
-/*   Updated: 2025/05/06 22:47:57 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/05/06 23:37:14 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,9 @@ int	main(int argc, char *argv[])
 	t_map_chars	map_chars;
 	t_rgb		floor_rgb;
 	t_rgb		ceiling_rgb;
-	mlx_t		*mlx;
+	//mlx_t		*mlx = NULL; // DB "Not necesary"
 	t_game		*game; // DB "Error: Too many variables declarations in a function"
 
-	mlx = NULL; // DB Avoid "error: ‘mlx’ may be used uninitialized"
 	initialize_structs(&map_s, &map_chars, &floor_rgb, &ceiling_rgb);
 	if (argc != 2)
 	{
@@ -84,10 +83,11 @@ int	main(int argc, char *argv[])
 	game = game_factory(&map_s);
 	if (!game)
 		return (EXIT_FAILURE);
-	if (init_game_textures(game, mlx) == EXIT_FAILURE)
+	// DB: Me has vuelto loco!! Le estabas pasando a todas las funciones "mlx" en lugar de "game->mlx"
+	if (init_game_textures(game, game->mlx) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	mlx_loop_hook(mlx, ft_game_hook, game);
-	mlx_loop(mlx);
+	mlx_loop_hook(game->mlx, ft_game_hook, game);
+	mlx_loop(game->mlx);
 	destroy_game(game);
 	free_elements(&map_s);
 	free_double_pointer(map_s.map);
