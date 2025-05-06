@@ -6,7 +6,7 @@
 /*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:39:00 by danjimen          #+#    #+#             */
-/*   Updated: 2025/05/06 23:42:13 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/05/06 23:52:16 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ static void	destroy_game(t_game *game)
 	mlx_delete_texture(game->wall_north);
 	free(game->ray_data);
 	free(game->player);
+	mlx_terminate(game->mlx); // DB Tenías esta línea después de liberar "game" 😭
 	free(game);
-	mlx_terminate(game->mlx);
 }
 
 int	main(int argc, char *argv[])
