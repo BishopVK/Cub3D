@@ -6,7 +6,7 @@
 /*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:39:00 by danjimen          #+#    #+#             */
-/*   Updated: 2025/05/06 23:37:14 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/05/06 23:42:13 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,17 @@ int	main(int argc, char *argv[])
 	//mlx_t		*mlx = NULL; // DB "Not necesary"
 	t_game		*game; // DB "Error: Too many variables declarations in a function"
 
-	initialize_structs(&map_s, &map_chars, &floor_rgb, &ceiling_rgb);
 	if (argc != 2)
 	{
 		ft_dprintf(2, "Error\n> Correct use: %s map.cub\n", argv[0]);
 		return (EXIT_FAILURE);
 	}
+	initialize_structs(&map_s, &map_chars, &floor_rgb, &ceiling_rgb);
 	check_arg_extension(argv[1]);
 	read_map(argv[1], &map_s);
 	init_flood_fill(&map_s);
-	printf("FinalMap\n");
-	print_map(map_s.map);
+	printf("FinalMap\n"); // DB
+	print_map(map_s.map); // DB
 	game = game_factory(&map_s);
 	if (!game)
 		return (EXIT_FAILURE);
@@ -88,7 +88,8 @@ int	main(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	mlx_loop_hook(game->mlx, ft_game_hook, game);
 	mlx_loop(game->mlx);
-	destroy_game(game);
+	destroy_game(game); // DB: 
+	printf("SEG FAULT???\n"); // DB: Causes a segmentation fault
 	free_elements(&map_s);
 	free_double_pointer(map_s.map);
 	return (EXIT_SUCCESS);
