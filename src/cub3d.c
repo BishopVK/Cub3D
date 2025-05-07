@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:39:00 by danjimen          #+#    #+#             */
-/*   Updated: 2025/05/06 23:52:16 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:42:52 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	initialize_structs(t_map *map_s, t_map_chars *map_chars,
 	ft_memset(map_chars, 0, sizeof(t_map_chars));
 	ft_memset(floor_rgb, 0, sizeof(t_rgb));
 	ft_memset(ceiling_rgb, 0, sizeof(t_rgb));
-	map_s->chars = map_chars; // DB Apuntar a la memoria de map_chars
+	map_s->chars = map_chars;
 	map_s->floor = floor_rgb;
 	map_s->ceiling = ceiling_rgb;
 }
@@ -56,7 +56,7 @@ static void	destroy_game(t_game *game)
 	mlx_delete_texture(game->wall_north);
 	free(game->ray_data);
 	free(game->player);
-	mlx_terminate(game->mlx); // DB Tenías esta línea después de liberar "game" 😭
+	mlx_terminate(game->mlx);
 	free(game);
 }
 
@@ -66,30 +66,23 @@ int	main(int argc, char *argv[])
 	t_map_chars	map_chars;
 	t_rgb		floor_rgb;
 	t_rgb		ceiling_rgb;
-	//mlx_t		*mlx = NULL; // DB "Not necesary"
-	t_game		*game; // DB "Error: Too many variables declarations in a function"
+	t_game		*game;
 
 	if (argc != 2)
-	{
-		ft_dprintf(2, "Error\n> Correct use: %s map.cub\n", argv[0]);
-		return (EXIT_FAILURE);
-	}
+		return (ft_dprintf(2, "Error\n> Correct use: %s map.cub\n", argv[0]),
+			EXIT_FAILURE);
 	initialize_structs(&map_s, &map_chars, &floor_rgb, &ceiling_rgb);
 	check_arg_extension(argv[1]);
 	read_map(argv[1], &map_s);
 	init_flood_fill(&map_s);
-	printf("FinalMap\n"); // DB
-	print_map(map_s.map); // DB
 	game = game_factory(&map_s);
 	if (!game)
 		return (EXIT_FAILURE);
-	// DB: Me has vuelto loco!! Le estabas pasando a todas las funciones "mlx" en lugar de "game->mlx"
 	if (init_game_textures(game, game->mlx) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	mlx_loop_hook(game->mlx, ft_game_hook, game);
 	mlx_loop(game->mlx);
-	destroy_game(game); // DB: 
-	printf("SEG FAULT???\n"); // DB: Causes a segmentation fault
+	destroy_game(game);
 	free_elements(&map_s);
 	free_double_pointer(map_s.map);
 	return (EXIT_SUCCESS);

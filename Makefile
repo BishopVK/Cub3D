@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+         #
+#    By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 13:35:22 by danjimen          #+#    #+#              #
-#    Updated: 2025/04/05 00:35:52 by danjimen         ###   ########.fr        #
+#    Updated: 2025/05/07 08:35:59 by danjimen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRC				=	$(SRC_DIR)/cub3d.c \
 					$(PARSE_DIR)/check_elements.c \
 					$(PARSE_DIR)/map.c \
 					$(FLOOD_FILL_DIR)/flood_fill.c \
+					$(FLOOD_FILL_DIR)/check_map_chars.c \
 					./src/init/game_init.c \
 					./src/init/player_init.c \
 					./src/game_engine/input/keyboard.c \

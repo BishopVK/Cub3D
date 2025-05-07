@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 18:01:21 by serferna          #+#    #+#             */
-/*   Updated: 2025/05/06 18:01:21 by serferna         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:52:27 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_game	*game_factory(t_map *map_s)
 	if (!mlx)
 		return (NULL);
 	game->mlx = mlx;
+	mlx_set_mouse_pos(game->mlx, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	mlx_set_cursor_mode(game->mlx, MLX_MOUSE_HIDDEN);
 	game->player = player_factory(map_s->player_x + 0.5, map_s->player_y + 0.5,
 			map_s->player_dir);
 	game->ray_data = malloc(sizeof(t_ray_data));

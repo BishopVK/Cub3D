@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:33:23 by danjimen          #+#    #+#             */
-/*   Updated: 2025/05/07 00:33:35 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:34:51 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,6 +322,7 @@ t_bool				update_frame_data_state(t_game *game);
 t_player			*player_factory(double x, double y, char dir);
 t_game				*game_factory(t_map *map_s);
 void				handle_input(t_game *game);
+void				handle_mouse(t_game *game);
 void				ft_game_hook(void *param);
 
 // ╔═.✵.═════════════════════════════════════════════╗
