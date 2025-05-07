@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   walls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:01:21 by serferna          #+#    #+#             */
-/*   Updated: 2025/05/04 18:01:21 by serferna         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:19:08 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	set_sky_earth_colors(t_game *game)
 	}
 }
 
-void	set_wall_line_texture(t_game *game)
+static void	set_wall_line_texture(t_game *game)
 {
 	t_ray_data	*rd;
 
@@ -68,7 +68,7 @@ void	set_wall_line_texture(t_game *game)
 		rd->tex_num = 3;
 }
 
-void	set_texture_color(t_game *game)
+static void	set_texture_color(t_game *game)
 {
 	int			y;
 	uint32_t	color;

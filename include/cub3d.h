@@ -6,7 +6,7 @@
 /*   By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:33:23 by danjimen          #+#    #+#             */
-/*   Updated: 2025/05/07 09:01:00 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:26:06 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,6 @@ void				check_elements(t_map *map_s);
 void				check_map_size(t_map *map_s);
 void				check_map_chars(t_map *map_s, int i, int j);
 void				save_map(char *map_file, t_map *map_s, int i, int fd);
-// void	save_map(char *map, t_map *m_a, int i);
 
 // ╔═.✵.═════════════════════════════════════════════╗
 // 					FLOOD_FILL FOLDER
@@ -242,48 +241,115 @@ void				init_flood_fill(t_map *map_s);
 void				count_chars(t_map *map_s, char **copy);
 
 // ╔═.✵.═════════════════════════════════════════════╗
-//  					GAME ENGINE
+//  			GAME ENGINE -> INPUT FOLDER
 // ╚═════════════════════════════════════════════.✵.═╝
 
-//////////////////////////////////////////////////////////
-//					MLX INTERFACE						//
-//////////////////////////////////////////////////////////
-uint32_t			get_image_pixel_color(mlx_image_t *img, int x, int y);
-uint32_t			from_rgb(int r, int g, int b, int a);
-
-//////////////////////////////////////////////////////////
-//					RAYCASTER							//
-//////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////
-//					RENDERING							//
-//////////////////////////////////////////////////////////
-t_bool				calculate_ray_direction_state(t_game *game);
-t_bool				perform_dda_state(t_game *game);
-t_bool				check_ray_completion_state(t_game *game);
-t_bool				advance_to_next_ray_state(t_game *game);
-t_bool				render_walls_floor_ceiling_state(t_game *game);
-t_bool				calculate_wall_distance_state(t_game *game);
-t_bool				calculate_line_height_state(t_game *game);
-t_bool				calculate_wall_drawing_bounds_state(t_game *game);
-t_bool				calculate_texture_coordinates_state(t_game *game);
-t_bool				render_frame_state(t_game *game);
-t_bool				update_frame_data_state(t_game *game);
-t_player			*player_factory(double x, double y, char dir);
-t_game				*game_factory(t_map *map_s);
+//////////////////////////////////////////////////////
+//						KEYBOARD.C					//
+//////////////////////////////////////////////////////
 void				handle_input(t_game *game);
+
+//////////////////////////////////////////////////////
+//						MOUSE.C						//
+//////////////////////////////////////////////////////
 void				handle_mouse(t_game *game);
-void				ft_game_hook(void *param);
 
 // ╔═.✵.═════════════════════════════════════════════╗
-// 					PLAYER
+//  		GAME ENGINE -> MLX INTERFACE FOLDER
 // ╚═════════════════════════════════════════════.✵.═╝
 
+//////////////////////////////////////////////////////////
+//				GET_IMAGE_PIXEL_COLOR.C					//
+//////////////////////////////////////////////////////////
+uint32_t			from_rgb(int r, int g, int b, int a);
+uint32_t			get_image_pixel_color(mlx_image_t *img, int x, int y);
+
+// ╔═.✵.═════════════════════════════════════════════╗
+//  		GAME ENGINE -> PLAYER FOLDER
+// ╚═════════════════════════════════════════════.✵.═╝
+
+//////////////////////////////////////////////////////
+//						MOVEMENT.C					//
+//////////////////////////////////////////////////////
 void				move_forward(t_game *game, double move_speed);
 void				move_backward(t_game *game, double move_speed);
 void				move_left(t_game *game, double move_speed);
 void				move_right(t_game *game, double move_speed);
+
+//////////////////////////////////////////////////////
+//						ROTATION.C					//
+//////////////////////////////////////////////////////
 void				rotate_left(t_game *game, double rotation_speed);
 void				rotate_right(t_game *game, double rotation_speed);
+
+// ╔═.✵.═════════════════════════════════════════════╗
+//  				RENDER FOLDER
+// ╚═════════════════════════════════════════════.✵.═╝
+
+//////////////////////////////////////////////////////////
+//						FRAME.C							//
+//////////////////////////////////////////////////////////
+t_bool				update_frame_data_state(t_game *game);
+t_bool				render_frame_state(t_game *game);
+
+//////////////////////////////////////////////////////////
+//						GAME_STATES.C					//
+//////////////////////////////////////////////////////////
+t_bool				check_ray_completion_state(t_game *game);
+t_bool				advance_to_next_ray_state(t_game *game);
+void				ft_game_hook(void *param);
+
+//////////////////////////////////////////////////////////
+//						WALLS.C							//
+//////////////////////////////////////////////////////////
+t_bool				render_walls_floor_ceiling_state(t_game *game);
+
+// ╔═.✵.═════════════════════════════════════════════╗
+//  			RENDER FOLDER -> RAYCASTING
+// ╚═════════════════════════════════════════════.✵.═╝
+
+//////////////////////////////////////////////////////////
+//				CALCULATE_LINE_HEIGHT_STATE.C			//
+//////////////////////////////////////////////////////////
+t_bool				calculate_line_height_state(t_game *game);
+
+//////////////////////////////////////////////////////////
+//				CALCULATE_RAY_DIRECTION_STATE.C			//
+//////////////////////////////////////////////////////////
+t_bool				calculate_ray_direction_state(t_game *game);
+
+//////////////////////////////////////////////////////////
+//			CALCULATE_TEXTURE_COORDINATES_STATE.C		//
+//////////////////////////////////////////////////////////
+t_bool				calculate_texture_coordinates_state(t_game *game);
+
+//////////////////////////////////////////////////////////
+//				CALCULATE_WALL_DISTANCE_STATE.C			//
+//////////////////////////////////////////////////////////
+t_bool				calculate_wall_distance_state(t_game *game);
+
+//////////////////////////////////////////////////////////
+//			CALCULATE_WALL_DRAWING_BOUNDS_STATE.C		//
+//////////////////////////////////////////////////////////
+t_bool				calculate_wall_drawing_bounds_state(t_game *game);
+
+//////////////////////////////////////////////////////////
+//					PERFORM_DDA_STATE.C					//
+//////////////////////////////////////////////////////////
+t_bool				perform_dda_state(t_game *game);
+
+// ╔═.✵.═════════════════════════════════════════════╗
+//  					INIT FOLDER
+// ╚═════════════════════════════════════════════.✵.═╝
+
+//////////////////////////////////////////////////////////
+//						GAME_INIT.C						//
+//////////////////////////////////////////////////////////
+t_game				*game_factory(t_map *map_s);
+
+//////////////////////////////////////////////////////////
+//						PLAYER_INIT.C					//
+//////////////////////////////////////////////////////////
+t_player			*player_factory(double x, double y, char dir);
 
 #endif
