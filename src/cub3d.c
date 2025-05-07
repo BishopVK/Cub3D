@@ -6,7 +6,7 @@
 /*   By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:39:00 by danjimen          #+#    #+#             */
-/*   Updated: 2025/05/07 08:42:52 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/05/07 12:10:54 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,48 @@ static void	initialize_structs(t_map *map_s, t_map_chars *map_chars,
 	map_s->ceiling = ceiling_rgb;
 }
 
-int	init_game_textures(t_game *game, mlx_t *mlx)
+static void	destroy_images_and_textures(t_game *game)
 {
+	if (game->mlx && game->screen)
+		mlx_delete_image(game->mlx, game->screen);
+	if (game->mlx && game->ea_img)
+		mlx_delete_image(game->mlx, game->ea_img);
+	if (game->mlx && game->we_img)
+		mlx_delete_image(game->mlx, game->we_img);
+	if (game->mlx && game->so_img)
+		mlx_delete_image(game->mlx, game->so_img);
+	if (game->mlx && game->no_img)
+		mlx_delete_image(game->mlx, game->no_img);
+	if (game->wall_east)
+		mlx_delete_texture(game->wall_east);
+	if (game->wall_west)
+		mlx_delete_texture(game->wall_west);
+	if (game->wall_south)
+		mlx_delete_texture(game->wall_south);
+	if (game->wall_north)
+		mlx_delete_texture(game->wall_north);
+}
+
+static void	destroy_game(t_game *game, t_map *map_s)
+{
+	destroy_images_and_textures(game);
+	if (game->ray_data)
+		free(game->ray_data);
+	if (game->player)
+		free(game->player);
+	if (game->mlx)
+		mlx_terminate(game->mlx);
+	if (game)
+		free(game);
+	exit_map_error(map_s, "", -1);
+}
+
+int	init_game_textures(t_game *game, mlx_t *mlx, t_map *map_s)
+{
+	game->ea_img = NULL;
+	game->we_img = NULL;
+	game->so_img = NULL;
+	game->no_img = NULL;
 	game->wall_east = mlx_load_png(game->map_s->east[1]);
 	game->wall_west = mlx_load_png(game->map_s->west[1]);
 	game->wall_south = mlx_load_png(game->map_s->south[1]);
@@ -34,6 +74,7 @@ int	init_game_textures(t_game *game, mlx_t *mlx)
 		|| !game->wall_north)
 	{
 		ft_dprintf(2, "Error\n> Failed to load texture\n");
+		destroy_game(game, map_s);
 		return (EXIT_FAILURE);
 	}
 	game->ea_img = mlx_texture_to_image(mlx, game->wall_east);
@@ -41,23 +82,6 @@ int	init_game_textures(t_game *game, mlx_t *mlx)
 	game->so_img = mlx_texture_to_image(mlx, game->wall_south);
 	game->no_img = mlx_texture_to_image(mlx, game->wall_north);
 	return (0);
-}
-
-static void	destroy_game(t_game *game)
-{
-	mlx_delete_image(game->mlx, game->screen);
-	mlx_delete_image(game->mlx, game->ea_img);
-	mlx_delete_image(game->mlx, game->we_img);
-	mlx_delete_image(game->mlx, game->so_img);
-	mlx_delete_image(game->mlx, game->no_img);
-	mlx_delete_texture(game->wall_east);
-	mlx_delete_texture(game->wall_west);
-	mlx_delete_texture(game->wall_south);
-	mlx_delete_texture(game->wall_north);
-	free(game->ray_data);
-	free(game->player);
-	mlx_terminate(game->mlx);
-	free(game);
 }
 
 int	main(int argc, char *argv[])
@@ -78,11 +102,11 @@ int	main(int argc, char *argv[])
 	game = game_factory(&map_s);
 	if (!game)
 		return (EXIT_FAILURE);
-	if (init_game_textures(game, game->mlx) == EXIT_FAILURE)
+	if (init_game_textures(game, game->mlx, &map_s) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	mlx_loop_hook(game->mlx, ft_game_hook, game);
 	mlx_loop(game->mlx);
-	destroy_game(game);
+	destroy_game(game, &map_s);
 	free_elements(&map_s);
 	free_double_pointer(map_s.map);
 	return (EXIT_SUCCESS);

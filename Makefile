@@ -6,7 +6,7 @@
 #    By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 13:35:22 by danjimen          #+#    #+#              #
-#    Updated: 2025/05/07 08:35:59 by danjimen         ###   ########.fr        #
+#    Updated: 2025/05/07 11:11:52 by danjimen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRC				=	$(SRC_DIR)/cub3d.c \
 					$(PARSE_DIR)/debug.c \
 					$(PARSE_DIR)/detect_elements.c \
 					$(PARSE_DIR)/check_elements.c \
+					$(PARSE_DIR)/check_rgb.c \
 					$(PARSE_DIR)/map.c \
 					$(FLOOD_FILL_DIR)/flood_fill.c \
 					$(FLOOD_FILL_DIR)/check_map_chars.c \

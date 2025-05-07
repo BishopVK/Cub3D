@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:52:43 by danjimen          #+#    #+#             */
-/*   Updated: 2025/05/07 00:39:50 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/05/07 10:41:35 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	exit_map_error(t_map *map_s, char *message, int fd)
 		get_next_line(fd, true);
 		close (fd);
 	}
-	ft_dprintf(2, "Error\n> %s\n", message);
+	if (ft_strlen(message) > 0)
+		ft_dprintf(2, "Error\n> %s\n", message);
 	exit (EXIT_FAILURE);
 }
 
