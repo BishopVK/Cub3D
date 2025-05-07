@@ -6,7 +6,7 @@
 /*   By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:33:23 by danjimen          #+#    #+#             */
-/*   Updated: 2025/05/07 08:34:51 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:01:00 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,6 @@ typedef struct s_map_chars
 {
 	int				empty;
 	int				wall;
-	/* int	collectible;
-	int	exit; */
 	int				player;
 	char			*buffer;
 	char			*buffer_trimed;
@@ -140,54 +138,6 @@ typedef struct s_map
 	int				total_1;
 	int				total_0;
 }					t_map;
-
-// XPM
-typedef struct s_img
-{
-	void			*player;
-	char			*player_path;
-	void			*collec;
-	char			*collec_path;
-	void			*wall;
-	char			*wall_path;
-	void			*wall_border;
-	char			*wall_border_path;
-	void			*back;
-	char			*back_path;
-	void			*exit;
-	char			*exit_path;
-	void			*exit_2;
-	char			*exit_path_2;
-	void			*enemy;
-	char			*enemy_path;
-	int				img_px;
-}					t_img;
-
-// Game
-typedef struct s_data
-{
-	void			*mlx_ptr;
-	void			*win_ptr;
-	int				screen_width;
-	int				screen_height;
-	t_img			*img;
-	t_map			*map_s;
-}					t_data;
-
-typedef enum s_key_codes
-{
-	UP_KEY = 65362,
-	LEFT_KEY = 65361,
-	DOWN_KEY = 65364,
-	RIGHT_KEY = 65363,
-	ESC_KEY = 65307,
-	W_KEY = 119,
-	A_KEY = 97,
-	S_KEY = 115,
-	D_KEY = 100,
-	X_BUTTON = 65293,
-	SPACE_KEY = 32
-}					t_key_codes;
 
 typedef struct s_game
 {
@@ -222,17 +172,17 @@ typedef struct s_game
 
 	// State machine
 	t_bool			is_done;
-	t_bool			(*state)(struct s_game * game);
+	t_bool			(*state)(struct s_game (*game));
 }					t_game;
 
 /*_____           _        _
  |  __ \         | |      | |
  | |__) | __ ___ | |_ ___ | |_ _   _ _ __   ___  ___
  |  ___/ '__/ _ \| __/ _ \| __| | | | '_ \ / _ \/ __|
- | |   | | | (_) | || (_) | |_| |_| | |_) |  __/\__ \ 
+ | |   | | | (_) | || (_) | |_| |_| | |_) |  __/\__ \
  |_|   |_|  \___/ \__\___/ \__|\__, | .__/ \___||___/
 								__/ | |
-								|___/|_|            */
+							   |___/|_|            */
 
 // ╔═.✵.═════════════════════════════════════════════╗
 // 					PARSE FOLDER
