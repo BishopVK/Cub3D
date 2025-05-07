@@ -1,9 +1,9 @@
-NO ./textures/xpm/north.xpm
-SO ./textures/xpm/south.xpm
-WE ./textures/xpm/west.xpm
-EA ./textures/xpm/east.xpm
+NO ./textures/png/testing/north.png
+SO ./textures/png/testing/south.png
+WE ./textures/png/testing/west.png
+EA ./textures/png/testing/east.png
 
-F 220,100,
+F 220,100
 C 225,30,255
 
 1111111111111
