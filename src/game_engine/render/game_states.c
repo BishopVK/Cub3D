@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_states.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:01:21 by serferna          #+#    #+#             */
-/*   Updated: 2025/05/07 00:38:26 by danjimen         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:32:29 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,5 @@ void	ft_game_hook(void *param)
 	while (!game->is_done)
 		game->state(game);
 	handle_input(game);
+	handle_mouse(game);
 }

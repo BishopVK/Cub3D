@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 18:01:21 by serferna          #+#    #+#             */
-/*   Updated: 2025/05/06 18:01:21 by serferna         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:33:40 by danjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 // TODO: Mejorar hace cosas raras con el raton y el puntero sale en la pantalla
 // Tempblando y saltando de un lado a otro
-// void	handle_mouse(t_game *game)
-// {
-// 	int x, y;
-// 	mlx_get_mouse_pos(game->mlx, &x, &y);
-// 	if (x < SCREEN_WIDTH / 2)
-// 		rotate_left(game, game->frameTime * 3000);
-// 	else if (x > SCREEN_WIDTH / 2)
-// 		rotate_right(game, game->frameTime * 3000);
-// 	mlx_set_mouse_pos(game->mlx, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-// }
+void	handle_mouse(t_game *game)
+{
+	int	x;
+	int	y;
+
+	mlx_get_mouse_pos(game->mlx, &x, &y);
+	if (x < SCREEN_WIDTH / 2)
+		rotate_left(game, game->frame_time * 3000);
+	else if (x > SCREEN_WIDTH / 2)
+		rotate_right(game, game->frame_time * 3000);
+	mlx_set_mouse_pos(game->mlx, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+}
