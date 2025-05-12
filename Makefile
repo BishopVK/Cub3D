@@ -6,7 +6,7 @@
 #    By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 13:35:22 by danjimen          #+#    #+#              #
-#    Updated: 2025/05/07 11:11:52 by danjimen         ###   ########.fr        #
+#    Updated: 2025/05/12 08:20:55 by danjimen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -110,7 +110,7 @@ rc: re
 r:	rc
 	./$(NAME) $(ARG)
 
-valgrind:	rc
-	valgrind --leak-check=full ./$(NAME) $(ARG)
+valgrind:
+	valgrind --tool=memcheck --leak-check=full --log-file=valgrind_output.txt ./$(NAME) $(ARG)
 
 .PHONY: all clean fclean re
