@@ -6,7 +6,7 @@
 #    By: danjimen <danjimen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 13:35:22 by danjimen          #+#    #+#              #
-#    Updated: 2025/05/12 08:20:55 by danjimen         ###   ########.fr        #
+#    Updated: 2025/05/12 11:02:09 by danjimen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,8 +68,6 @@ LIBS	= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 LIBFT_DIR		=	include/libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
 
-# MINILIBX_DIR	=	include/minilibx-linux
-# MINILIBX		=	$(MINILIBX_DIR)/libmlx_Linux.a
 
 all: $(NAME)
 
@@ -79,12 +77,9 @@ $(LIBFT):
 libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
-# $(MINILIBX):
-# 	@$(MAKE) -C $(MINILIBX_DIR)
 
-# $(NAME): libmlx $(LIBFT) $(MINILIBX) $(OBJ)
 $(NAME): libmlx $(LIBFT) $(OBJ)
-	# @$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(MINILIBX_DIR) -I$(LIBMLX)/include $(OBJ) $(LIBS) $(LIBFT) $(MINILIBX) -L$(MINILIBX_DIR) -lX11 -lXext -lbsd -o $(NAME)
+	# @$(CC) $(CFLAGS) -I$(LIBFT_DIR)-I$(LIBMLX)/include $(OBJ) $(LIBS) $(LIBFT) -o $(NAME)
 	@$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(LIBMLX)/include $(OBJ) $(LIBS) $(LIBFT) -o $(NAME)
 	$(call print_cyan,"Compiled cub3D")
 
@@ -94,12 +89,12 @@ $(NAME): libmlx $(LIBFT) $(OBJ)
 
 clean:
 	@$(MAKE) -s -C $(LIBFT_DIR) clean
-	# @$(MAKE) -s -C $(MINILIBX_DIR) clean
+	@rm -rf $(LIBMLX)/build
 	@rm -f $(OBJ)
+	$(call print_green,"Cleaned cub3D and MLX42 objects")
 
 fclean: clean
 	@$(MAKE) -s -C $(LIBFT_DIR) fclean
-	# @$(MAKE) -s -C $(MINILIBX_DIR) clean
 	@rm -f $(NAME)
 	$(call print_green,"Cleaned the executable cub3D")
 
@@ -107,8 +102,9 @@ re: fclean all
 
 rc: re
 	@$(MAKE) -s -C $(LIBFT_DIR) clean
-	# @$(MAKE) -s -C $(MINILIBX_DIR) clean
+	@rm -rf $(LIBMLX)/build
 	@rm -f $(OBJ)
+	$(call print_green,"Cleaned cub3D and MLX42 objects")
 
 r:	rc
 	./$(NAME) $(ARG)
