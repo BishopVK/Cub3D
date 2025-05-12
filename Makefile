@@ -68,8 +68,8 @@ LIBS	= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 LIBFT_DIR		=	include/libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
 
-MINILIBX_DIR	=	include/minilibx-linux
-MINILIBX		=	$(MINILIBX_DIR)/libmlx_Linux.a
+# MINILIBX_DIR	=	include/minilibx-linux
+# MINILIBX		=	$(MINILIBX_DIR)/libmlx_Linux.a
 
 all: $(NAME)
 
@@ -79,24 +79,27 @@ $(LIBFT):
 libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
-$(MINILIBX):
-	@$(MAKE) -C $(MINILIBX_DIR)
+# $(MINILIBX):
+# 	@$(MAKE) -C $(MINILIBX_DIR)
 
-$(NAME): libmlx $(LIBFT) $(MINILIBX) $(OBJ)
-	@$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(MINILIBX_DIR) -I$(LIBMLX)/include $(OBJ) $(LIBS) $(LIBFT) $(MINILIBX) -L$(MINILIBX_DIR) -lX11 -lXext -lbsd -o $(NAME)
+# $(NAME): libmlx $(LIBFT) $(MINILIBX) $(OBJ)
+$(NAME): libmlx $(LIBFT) $(OBJ)
+	# @$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(MINILIBX_DIR) -I$(LIBMLX)/include $(OBJ) $(LIBS) $(LIBFT) $(MINILIBX) -L$(MINILIBX_DIR) -lX11 -lXext -lbsd -o $(NAME)
+	@$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(LIBMLX)/include $(OBJ) $(LIBS) $(LIBFT) -o $(NAME)
 	$(call print_cyan,"Compiled cub3D")
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(MINILIBX_DIR) -c $< -o $@
+	@$(CC) $(CFLAGS) -I$(LIBFT_DIR) -c $< -o $@
+	# @$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(MINILIBX_DIR) -c $< -o $@
 
 clean:
 	@$(MAKE) -s -C $(LIBFT_DIR) clean
-	@$(MAKE) -s -C $(MINILIBX_DIR) clean
+	# @$(MAKE) -s -C $(MINILIBX_DIR) clean
 	@rm -f $(OBJ)
 
 fclean: clean
 	@$(MAKE) -s -C $(LIBFT_DIR) fclean
-	@$(MAKE) -s -C $(MINILIBX_DIR) clean
+	# @$(MAKE) -s -C $(MINILIBX_DIR) clean
 	@rm -f $(NAME)
 	$(call print_green,"Cleaned the executable cub3D")
 
@@ -104,7 +107,7 @@ re: fclean all
 
 rc: re
 	@$(MAKE) -s -C $(LIBFT_DIR) clean
-	@$(MAKE) -s -C $(MINILIBX_DIR) clean
+	# @$(MAKE) -s -C $(MINILIBX_DIR) clean
 	@rm -f $(OBJ)
 
 r:	rc
