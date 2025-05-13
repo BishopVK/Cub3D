@@ -94,6 +94,5 @@ C 225,30,0
 ## Credits
 Developed by:
 
-- **BishopVK**  
 - **[Daniel Jimenez Graindorge - BishopVK](https://github.com/BishopVK)**
 - **[Sergio Fernández Fernández - zenix-s](https://github.com/zenix-s)**
