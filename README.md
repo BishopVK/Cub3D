@@ -95,5 +95,5 @@ C 225,30,0
 Developed by:
 
 - **BishopVK**  
-- **[https://github.com/BishopVK](Daniel Jimenez Graindorge (BishopVK))**  
-- **[https://github.com/zenix-s](Sergio Fernández Fernández (zenix-s))**
+- ** [https://github.com/BishopVK](Daniel Jimenez Graindorge (BishopVK)) **  
+- ** [https://github.com/zenix-s](Sergio Fernández Fernández (zenix-s)) **
