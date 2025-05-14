@@ -9,6 +9,12 @@
 ## Description
 Cub3D is a graphics project inspired by the classic game Wolfenstein 3D. It uses raycasting techniques to create a 3D experience from a 2D map. This project implements a basic rendering engine using the MLX42 library.
 
+## Preview of gameplay
+
+<p align="center">
+<img src="https://github.com/BishopVK/Cub3D/blob/main/img/Cub3D-800x600.gif">
+</p>
+
 ## Features
 - 3D rendering using raycasting techniques  
 - Player movement using keyboard and mouse  
